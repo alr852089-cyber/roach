@@ -25,15 +25,21 @@ html,body{height:100%;background:#0a0a0a;color:#e8e8e8;font-family:system-ui,-ap
 .big{width:100%;padding:14px;border-radius:12px;border:none;background:#4ade80;color:#000;font-size:15px;font-weight:700;margin-bottom:10px;cursor:pointer;font-family:inherit}
 .big:active{transform:scale(.98)}
 .big.stop{background:#ef4444;color:#fff}
+.big.alt{background:#3b82f6;color:#fff}
 canvas{width:100%;background:#000;border-radius:12px;margin:10px 0;display:block}
 video{width:1px;height:1px;opacity:0;position:absolute;pointer-events:none}
-.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin-top:10px}
+textarea,input[type=text]{width:100%;padding:12px;border-radius:10px;background:#151515;color:#fff;border:1px solid #333;font-family:inherit;font-size:14px;margin-bottom:10px}
+textarea{min-height:80px;resize:vertical}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:8px;margin-top:10px}
 .readout>div{background:#151515;border-radius:10px;padding:10px;text-align:center}
 .readout small{color:#666;font-size:10px;display:block;text-transform:uppercase;letter-spacing:.5px}
-.readout b{color:#4ade80;font-size:16px;display:block;margin-top:2px;font-variant-numeric:tabular-nums}
+.readout b{color:#4ade80;font-size:15px;display:block;margin-top:2px;font-variant-numeric:tabular-nums}
 .meter{background:#151515;border-radius:10px;padding:10px;margin:10px 0}
 .bar{height:10px;background:#222;border-radius:5px;overflow:hidden}
 .bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,#4ade80,#facc15,#ef4444);transition:width .08s}
+label{color:#888;font-size:12px;display:block;margin-top:8px}
+input[type=range]{width:100%;margin-bottom:8px}
+.drop-item{background:#151515;padding:12px;border-radius:10px;margin-top:10px;color:#ccc;font-size:13px}
 </style>
 </head>
 <body>
@@ -46,428 +52,1495 @@ video{width:1px;height:1px;opacity:0;position:absolute;pointer-events:none}
   <main id="hub">
     <p class="tagline">28 tools · zero internet</p>
     <div class="grid">
-
-      <button class="mod" data-mod="batEar">
-        <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 4-3 5-3 7"/><path d="M9 8a3 3 0 0 1 3-3"/><path d="M9 8c0 2 1 2.5 1 3.5"/><path d="M3 8a9 9 0 0 1 3-6.7"/><path d="M18.5 5.5A9 9 0 0 1 21 8"/></svg>
-        BatEar
-      </button>
-
-      <button class="mod" data-mod="pulseLens">
-        <svg viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/></svg>
-        PulseLens
-      </button>
-
-      <button class="mod" data-mod="geoPhone">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
-        GeoPhone
-      </button>
-
-      <button class="mod" data-mod="soundShape">
-        <svg viewBox="0 0 24 24"><path d="M2 12h2l2-6 3 12 3-16 3 20 3-14 2 4h2"/></svg>
-        SoundShape
-      </button>
-
-      <button class="mod" data-mod="chronoLens">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        ChronoLens
-      </button>
-
-      <button class="mod" data-mod="cosmicRay">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 10V2M10.3 13L3 17M13.7 13l7.3 4"/></svg>
-        Cosmic Ray
-      </button>
-
-      <button class="mod" data-mod="spectroLens">
-        <svg viewBox="0 0 24 24"><path d="M3 20h18M12 3v9M6 8l4 4M18 8l-4 4"/><circle cx="12" cy="14" r="2"/></svg>
-        SpectroLens
-      </button>
-
-      <button class="mod" data-mod="gravityWell">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 9V3M5 12a7 7 0 0 0 14 0 7 7 0 0 0-14 0z"/><path d="M3 21h18"/></svg>
-        GravityWell
-      </button>
-
-      <button class="mod" data-mod="senseFusion">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        SenseFusion
-      </button>
-
-      <button class="mod" data-mod="pathReplay">
-        <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6c6 0 4 12 8 12"/></svg>
-        PathReplay
-      </button>
-
-      <button class="mod" data-mod="deadDrop">
-        <svg viewBox="0 0 24 24"><path d="M12 22s7-7 7-13a7 7 0 0 0-14 0c0 6 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        DeadDrop
-      </button>
-
-      <button class="mod" data-mod="lightGuard">
-        <svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c1 1 1.5 2 1.5 3.5h5c0-1.5.5-2.5 1.5-3.5A6 6 0 0 0 12 3z"/></svg>
-        LightGuard
-      </button>
-
-      <button class="mod" data-mod="microScope">
-        <svg viewBox="0 0 24 24"><path d="M6 20h14M9 20v-3a5 5 0 0 1 5-5h1"/><path d="M14 3l3 3-4 4-3-3z"/><path d="M10 7l-3 3"/></svg>
-        MicroScope
-      </button>
-
-      <button class="mod" data-mod="echoSonar">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>
-        EchoSonar
-      </button>
-
-      <button class="mod" data-mod="stegano">
-        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="15" height="12" rx="2"/><path d="M18 9l3-2v10l-3-2"/><circle cx="8" cy="11" r="1.5"/></svg>
-        SteganoCam
-      </button>
-
-      <button class="mod" data-mod="bioacoustic">
-        <svg viewBox="0 0 24 24"><path d="M16 6c0 3-3 4-6 4s-4 1-4 3 1 3 3 3c1 0 2 .5 2 2v2"/><circle cx="17" cy="6" r="1"/><path d="M14 4l3-2"/></svg>
-        Bioacoustic
-      </button>
-
-      <button class="mod" data-mod="materialId">
-        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="9" rx="8" ry="3"/><path d="M4 9v6c0 1.7 3.6 3 8 3s8-1.3 8-3V9"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
-        Material ID
-      </button>
-
-      <button class="mod" data-mod="tapShape">
-        <svg viewBox="0 0 24 24"><path d="M9 11V6a2 2 0 1 1 4 0v5"/><path d="M13 11V9a2 2 0 1 1 4 0v3"/><path d="M17 11v-1a2 2 0 1 1 4 0v5a6 6 0 0 1-6 6h-3a6 6 0 0 1-6-6v-3a2 2 0 1 1 4 0"/></svg>
-        TapShape
-      </button>
-
-      <button class="mod" data-mod="skyScanner">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M12 2v2M12 12v2M6 8H4M20 8h-2M7 3l1.5 1.5M17 3l-1.5 1.5"/><path d="M5 20l7-4 7 4"/></svg>
-        SkyScanner
-      </button>
-
-      <button class="mod" data-mod="sleepEye">
-        <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        SleepEye
-      </button>
-
-      <button class="mod" data-mod="soundDrop">
-        <svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
-        SoundDrop
-      </button>
-
-      <button class="mod" data-mod="cipherAir">
-        <svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0M8 12a4 4 0 0 1 8 0"/><circle cx="12" cy="16" r="1.5"/><path d="M12 18v3"/></svg>
-        CipherAir
-      </button>
-
-      <button class="mod" data-mod="rollingShutter">
-        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="14" height="10" rx="2"/><path d="M17 10l4-2v8l-4-2"/><path d="M7 5l2 2M11 5l2 2M15 5l2 2"/></svg>
-        Rolling Shutter
-      </button>
-
-      <button class="mod" data-mod="pocketChem">
-        <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7 15h10"/></svg>
-        PocketChem
-      </button>
-
-      <button class="mod" data-mod="phoneScope">
-        <svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
-        PhoneScope
-      </button>
-
-      <button class="mod" data-mod="cipherBook">
-        <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/><circle cx="16" cy="16" r="1"/></svg>
-        CipherBook
-      </button>
-
-      <button class="mod" data-mod="legacyLock">
-        <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.5"/></svg>
-        Legacy Lock
-      </button>
-
-      <button class="mod" data-mod="offlineMind">
-        <svg viewBox="0 0 24 24"><path d="M9 4a4 4 0 0 0-4 4 3 3 0 0 0-1 5.8A3 3 0 0 0 7 18a3 3 0 0 0 5 1V4a3 3 0 0 0-3 0z"/><path d="M15 4a4 4 0 0 1 4 4 3 3 0 0 1 1 5.8A3 3 0 0 1 17 18a3 3 0 0 1-5 1"/></svg>
-        OfflineMind
-      </button>
-
+      <button class="mod" data-mod="batEar"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 4-3 5-3 7"/><path d="M9 8a3 3 0 0 1 3-3"/><path d="M9 8c0 2 1 2.5 1 3.5"/><path d="M3 8a9 9 0 0 1 3-6.7"/><path d="M18.5 5.5A9 9 0 0 1 21 8"/></svg>BatEar</button>
+      <button class="mod" data-mod="pulseLens"><svg viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/></svg>PulseLens</button>
+      <button class="mod" data-mod="geoPhone"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>GeoPhone</button>
+      <button class="mod" data-mod="soundShape"><svg viewBox="0 0 24 24"><path d="M2 12h2l2-6 3 12 3-16 3 20 3-14 2 4h2"/></svg>SoundShape</button>
+      <button class="mod" data-mod="chronoLens"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>ChronoLens</button>
+      <button class="mod" data-mod="cosmicRay"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 10V2M10.3 13L3 17M13.7 13l7.3 4"/></svg>Cosmic Ray</button>
+      <button class="mod" data-mod="spectroLens"><svg viewBox="0 0 24 24"><path d="M3 20h18M12 3v9M6 8l4 4M18 8l-4 4"/><circle cx="12" cy="14" r="2"/></svg>SpectroLens</button>
+      <button class="mod" data-mod="gravityWell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 9V3M5 12a7 7 0 0 0 14 0 7 7 0 0 0-14 0z"/><path d="M3 21h18"/></svg>GravityWell</button>
+      <button class="mod" data-mod="senseFusion"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>SenseFusion</button>
+      <button class="mod" data-mod="pathReplay"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6c6 0 4 12 8 12"/></svg>PathReplay</button>
+      <button class="mod" data-mod="deadDrop"><svg viewBox="0 0 24 24"><path d="M12 22s7-7 7-13a7 7 0 0 0-14 0c0 6 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>DeadDrop</button>
+      <button class="mod" data-mod="lightGuard"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c1 1 1.5 2 1.5 3.5h5c0-1.5.5-2.5 1.5-3.5A6 6 0 0 0 12 3z"/></svg>LightGuard</button>
+      <button class="mod" data-mod="microScope"><svg viewBox="0 0 24 24"><path d="M6 20h14M9 20v-3a5 5 0 0 1 5-5h1"/><path d="M14 3l3 3-4 4-3-3z"/><path d="M10 7l-3 3"/></svg>MicroScope</button>
+      <button class="mod" data-mod="echoSonar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>EchoSonar</button>
+      <button class="mod" data-mod="stegano"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="15" height="12" rx="2"/><path d="M18 9l3-2v10l-3-2"/><circle cx="8" cy="11" r="1.5"/></svg>SteganoCam</button>
+      <button class="mod" data-mod="bioacoustic"><svg viewBox="0 0 24 24"><path d="M16 6c0 3-3 4-6 4s-4 1-4 3 1 3 3 3c1 0 2 .5 2 2v2"/><circle cx="17" cy="6" r="1"/><path d="M14 4l3-2"/></svg>Bioacoustic</button>
+      <button class="mod" data-mod="materialId"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="9" rx="8" ry="3"/><path d="M4 9v6c0 1.7 3.6 3 8 3s8-1.3 8-3V9"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Material ID</button>
+      <button class="mod" data-mod="tapShape"><svg viewBox="0 0 24 24"><path d="M9 11V6a2 2 0 1 1 4 0v5"/><path d="M13 11V9a2 2 0 1 1 4 0v3"/><path d="M17 11v-1a2 2 0 1 1 4 0v5a6 6 0 0 1-6 6h-3a6 6 0 0 1-6-6v-3a2 2 0 1 1 4 0"/></svg>TapShape</button>
+      <button class="mod" data-mod="skyScanner"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M12 2v2M12 12v2M6 8H4M20 8h-2M7 3l1.5 1.5M17 3l-1.5 1.5"/><path d="M5 20l7-4 7 4"/></svg>SkyScanner</button>
+      <button class="mod" data-mod="sleepEye"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>SleepEye</button>
+      <button class="mod" data-mod="soundDrop"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>SoundDrop</button>
+      <button class="mod" data-mod="cipherAir"><svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0M8 12a4 4 0 0 1 8 0"/><circle cx="12" cy="16" r="1.5"/><path d="M12 18v3"/></svg>CipherAir</button>
+      <button class="mod" data-mod="rollingShutter"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="14" height="10" rx="2"/><path d="M17 10l4-2v8l-4-2"/><path d="M7 5l2 2M11 5l2 2M15 5l2 2"/></svg>Rolling Shutter</button>
+      <button class="mod" data-mod="pocketChem"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7 15h10"/></svg>PocketChem</button>
+      <button class="mod" data-mod="phoneScope"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>PhoneScope</button>
+      <button class="mod" data-mod="cipherBook"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/><circle cx="16" cy="16" r="1"/></svg>CipherBook</button>
+      <button class="mod" data-mod="legacyLock"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.5"/></svg>Legacy Lock</button>
+      <button class="mod" data-mod="offlineMind"><svg viewBox="0 0 24 24"><path d="M9 4a4 4 0 0 0-4 4 3 3 0 0 0-1 5.8A3 3 0 0 0 7 18a3 3 0 0 0 5 1V4a3 3 0 0 0-3 0z"/><path d="M15 4a4 4 0 0 1 4 4 3 3 0 0 1 1 5.8A3 3 0 0 1 17 18a3 3 0 0 1-5 1"/></svg>OfflineMind</button>
     </div>
   </main>
 
-  <!-- BatEar Module -->
+  <!-- 1. BatEar -->
   <section id="mod-batEar" class="module hidden">
-    <h2>
-      <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 4-3 5-3 7"/><path d="M9 8a3 3 0 0 1 3-3"/><path d="M9 8c0 2 1 2.5 1 3.5"/><path d="M3 8a9 9 0 0 1 3-6.7"/><path d="M18.5 5.5A9 9 0 0 1 21 8"/></svg>
-      BatEar
-    </h2>
-    <p class="hint">Wear headphones. Detects ultrasonic frequencies (up to 22 kHz) and visualizes them live. Peak frequency is shown below.</p>
-    <button id="batEarStart" class="big">Start Listening</button>
+    <h2><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 4-3 5-3 7"/><path d="M9 8a3 3 0 0 1 3-3"/><path d="M9 8c0 2 1 2.5 1 3.5"/></svg>BatEar</h2>
+    <p class="hint">Wear headphones. Ultrasonic listener up to 22 kHz.</p>
+    <button id="batEarStart" class="big">Start</button>
     <button id="batEarStop" class="big stop hidden">Stop</button>
-    <div class="meter">
-      <div class="bar"><span id="batEarLevel"></span></div>
-    </div>
+    <div class="meter"><div class="bar"><span id="batEarLevel"></span></div></div>
     <canvas id="batEarCanvas" width="800" height="300"></canvas>
-    <div class="readout">
-      <div><small>Peak Freq</small><b id="batEarPeak">— Hz</b></div>
-      <div><small>Level</small><b id="batEarDb">— dB</b></div>
-    </div>
+    <div class="readout"><div><small>Peak Freq</small><b id="batEarPeak">— Hz</b></div><div><small>Level</small><b id="batEarDb">— dB</b></div></div>
   </section>
 
-  <!-- PulseLens Module -->
+  <!-- 2. PulseLens -->
   <section id="mod-pulseLens" class="module hidden">
-    <h2>
-      <svg viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/></svg>
-      PulseLens
-    </h2>
-    <p class="hint">Turn on the flash. Gently place your fingertip over the rear camera lens. Hold still for 10 seconds.</p>
+    <h2><svg viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/></svg>PulseLens</h2>
+    <p class="hint">Turn on flash. Cover the rear camera with your fingertip. Hold still 10s.</p>
     <button id="pulseStart" class="big">Start</button>
     <button id="pulseStop" class="big stop hidden">Stop</button>
     <video id="pulseVideo" playsinline muted></video>
-    <div class="readout">
-      <div><small>BPM</small><b id="pulseBpm">—</b></div>
-      <div><small>Signal</small><b id="pulseSig">—</b></div>
-    </div>
+    <div class="readout"><div><small>BPM</small><b id="pulseBpm">—</b></div><div><small>Signal</small><b id="pulseSig">—</b></div></div>
     <canvas id="pulseCanvas" width="800" height="250"></canvas>
   </section>
 
-  <!-- Placeholder for future modules -->
-  <section id="mod-placeholder" class="module hidden">
-    <h2 id="phTitle">Coming Soon</h2>
-    <p class="hint">This module's code will be added in the next step.</p>
+  <!-- 3. GeoPhone -->
+  <section id="mod-geoPhone" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>GeoPhone</h2>
+    <p class="hint">Place flat on a table. Tap the table — watch it move.</p>
+    <button id="geoStart" class="big">Start</button>
+    <button id="geoStop" class="big stop hidden">Stop</button>
+    <canvas id="geoCanvas" width="800" height="400"></canvas>
+    <div class="readout"><div><small>X</small><b id="gX">0</b></div><div><small>Y</small><b id="gY">0</b></div><div><small>Z</small><b id="gZ">0</b></div><div><small>Mag</small><b id="gM">0</b></div></div>
   </section>
+
+  <!-- 4. SoundShape -->
+  <section id="mod-soundShape" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M2 12h2l2-6 3 12 3-16 3 20 3-14 2 4h2"/></svg>SoundShape</h2>
+    <p class="hint">Speak, sing, or play music. Sound becomes geometry.</p>
+    <button id="shapeStart" class="big">Start</button>
+    <button id="shapeStop" class="big stop hidden">Stop</button>
+    <canvas id="shapeCanvas" width="800" height="800"></canvas>
+  </section>
+
+  <!-- 5. ChronoLens -->
+  <section id="mod-chronoLens" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>ChronoLens</h2>
+    <p class="hint">Long exposure stacking. Keep still. 1 frame / 500ms.</p>
+    <button id="chronoStart" class="big">Start</button>
+    <button id="chronoStop" class="big stop hidden">Stop</button>
+    <button id="chronoSave" class="big alt hidden">Save Image</button>
+    <video id="chronoVideo" playsinline muted></video>
+    <canvas id="chronoCanvas" width="800" height="600"></canvas>
+    <div class="readout"><div><small>Frames</small><b id="chronoCount">0</b></div></div>
+  </section>
+
+  <!-- 6. Cosmic Ray -->
+  <section id="mod-cosmicRay" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 10V2M10.3 13L3 17M13.7 13l7.3 4"/></svg>Cosmic Ray</h2>
+    <p class="hint">Cover rear lens completely. White dots = particle hits.</p>
+    <button id="cosmicStart" class="big">Start</button>
+    <button id="cosmicStop" class="big stop hidden">Stop</button>
+    <video id="cosmicVideo" playsinline muted></video>
+    <div class="readout"><div><small>Hits</small><b id="cosmicHits">0</b></div><div><small>Rate/min</small><b id="cosmicRate">0</b></div><div><small>Time</small><b id="cosmicTime">0s</b></div></div>
+  </section>
+
+  <!-- 7. SpectroLens -->
+  <section id="mod-spectroLens" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><circle cx="12" cy="14" r="2"/></svg>SpectroLens</h2>
+    <p class="hint">Point camera at light. RGB + color temp.</p>
+    <button id="specStart" class="big">Start</button>
+    <button id="specStop" class="big stop hidden">Stop</button>
+    <video id="specVideo" playsinline muted></video>
+    <div id="specSwatch" style="width:100%;height:70px;border-radius:12px;margin:10px 0;border:1px solid #222"></div>
+    <div class="readout"><div><small>R</small><b id="sR">0</b></div><div><small>G</small><b id="sG">0</b></div><div><small>B</small><b id="sB">0</b></div><div><small>Temp</small><b id="sT">— K</b></div></div>
+    <canvas id="specCanvas" width="800" height="200"></canvas>
+  </section>
+
+  <!-- 8. GravityWell -->
+  <section id="mod-gravityWell" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg>GravityWell</h2>
+    <p class="hint">Records g-force. Toss phone (over soft surface!).</p>
+    <button id="gravStart" class="big">Start</button>
+    <button id="gravStop" class="big stop hidden">Stop</button>
+    <canvas id="gravCanvas" width="800" height="300"></canvas>
+    <div class="readout"><div><small>Peak g</small><b id="gPeak">0</b></div><div><small>Current</small><b id="gCur">0</b></div><div><small>Samples</small><b id="gN">0</b></div></div>
+  </section>
+
+  <!-- 9. SenseFusion -->
+  <section id="mod-senseFusion" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>SenseFusion</h2>
+    <p class="hint">Live dashboard of every sensor.</p>
+    <button id="fusionStart" class="big">Start</button>
+    <button id="fusionStop" class="big stop hidden">Stop</button>
+    <canvas id="fusionCanvas" width="800" height="500"></canvas>
+    <div class="readout"><div><small>Accel</small><b id="fAcc">0</b></div><div><small>Audio</small><b id="fAudio">0</b></div><div><small>Battery</small><b id="fBat">—</b></div></div>
+  </section>
+
+  <!-- 10. PathReplay -->
+  <section id="mod-pathReplay" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6c6 0 4 12 8 12"/></svg>PathReplay</h2>
+    <p class="hint">Records GPS path. Walk, come back, replay.</p>
+    <button id="pathStart" class="big">Start</button>
+    <button id="pathStop" class="big stop hidden">Stop</button>
+    <button id="pathClear" class="big alt">Clear</button>
+    <canvas id="pathCanvas" width="800" height="600"></canvas>
+    <div class="readout"><div><small>Points</small><b id="pathPts">0</b></div><div><small>Dist</small><b id="pathDist">0 m</b></div><div><small>Speed</small><b id="pathSpd">0 km/h</b></div></div>
+  </section>
+
+  <!-- 11. DeadDrop -->
+  <section id="mod-deadDrop" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M12 22s7-7 7-13a7 7 0 0 0-14 0c0 6 7 13 7 13z"/></svg>DeadDrop</h2>
+    <p class="hint">Leave encrypted note at a location. PIN to unlock nearby.</p>
+    <div class="readout"><div><small>Lat</small><b id="ddLat">—</b></div><div><small>Lon</small><b id="ddLon">—</b></div><div><small>Drops</small><b id="ddCount">0</b></div></div>
+    <button id="ddLocate" class="big">📍 Get Location</button>
+    <textarea id="ddMsg" placeholder="Secret message..."></textarea>
+    <input id="ddPin" type="text" inputmode="numeric" placeholder="PIN (4 digits)">
+    <button id="ddSave" class="big">💾 Save Drop</button>
+    <button id="ddNearby" class="big alt">🔍 Find Nearby Drops</button>
+    <div id="ddList"></div>
+  </section>
+
+  <!-- 12. LightGuard -->
+  <section id="mod-lightGuard" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c1 1 1.5 2 1.5 3.5h5c0-1.5.5-2.5 1.5-3.5A6 6 0 0 0 12 3z"/></svg>LightGuard</h2>
+    <p class="hint">Analyze ambient light. Detects flicker & color tone.</p>
+    <button id="lightStart" class="big">Start</button>
+    <button id="lightStop" class="big stop hidden">Stop</button>
+    <video id="lightVideo" playsinline muted></video>
+    <div class="readout"><div><small>Lux</small><b id="lgLux">—</b></div><div><small>Flicker</small><b id="lgFlicker">—</b></div><div><small>Tone</small><b id="lgTone">—</b></div></div>
+    <canvas id="lightCanvas" width="800" height="250"></canvas>
+  </section>
+
+  <!-- 13. MicroScope -->
+  <section id="mod-microScope" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M6 20h14M9 20v-3a5 5 0 0 1 5-5h1"/><path d="M14 3l3 3-4 4-3-3z"/></svg>MicroScope</h2>
+    <p class="hint">Digital microscope. Tip: water drop on lens for real magnification.</p>
+    <button id="microStart" class="big">Start</button>
+    <button id="microStop" class="big stop hidden">Stop</button>
+    <video id="microVideo" playsinline muted></video>
+    <canvas id="microCanvas" width="800" height="600"></canvas>
+    <label>Zoom: <span id="microZoomVal">1.0</span>x</label>
+    <input id="microZoom" type="range" min="1" max="8" step="0.1" value="1">
+    <label>Contrast: <span id="microConVal">100</span>%</label>
+    <input id="microCon" type="range" min="50" max="300" step="10" value="100">
+    <button id="microSnapshot" class="big alt">📸 Save Frame</button>
+  </section>
+
+  <!-- 14. EchoSonar -->
+  <section id="mod-echoSonar" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>EchoSonar</h2>
+    <p class="hint">Point at wall. Tap Ping. Measures echo return.</p>
+    <button id="sonarPing" class="big">🎯 PING</button>
+    <div class="readout"><div><small>Dist</small><b id="sonarDist">— m</b></div><div><small>Delay</small><b id="sonarDelay">— ms</b></div><div><small>Temp</small><b id="sonarTemp">25 °C</b></div></div>
+    <canvas id="sonarCanvas" width="800" height="300"></canvas>
+    <label>Air Temp: <span id="sonarTempVal">25</span>°C</label>
+    <input id="sonarTempIn" type="range" min="0" max="45" step="1" value="25">
+  </section>
+
+  <!-- 15. SteganoCam -->
+  <section id="mod-stegano" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><rect x="3" y="6" width="15" height="12" rx="2"/><path d="M18 9l3-2v10l-3-2"/></svg>SteganoCam</h2>
+    <p class="hint">Hide text inside an image. Save PNG, share safely. Extract with PIN.</p>
+    <button id="stegPick" class="big">🖼️ Pick Image</button>
+    <input id="stegFile" type="file" accept="image/*" style="display:none">
+    <textarea id="stegMsg" placeholder="Secret text to hide..."></textarea>
+    <input id="stegPin" type="text" inputmode="numeric" placeholder="PIN (4 digits)">
+    <button id="stegEncode" class="big">🔐 Encode & Download</button>
+    <hr style="border-color:#222;margin:16px 0">
+    <input id="stegDecodeFile" type="file" accept="image/*" style="width:100%;margin-bottom:10px;color:#888">
+    <input id="stegDecodePin" type="text" inputmode="numeric" placeholder="PIN to decode">
+    <button id="stegDecode" class="big alt">🔓 Decode</button>
+    <div id="stegResult" style="color:#4ade80;margin-top:10px;font-size:14px"></div>
+  </section>
+
+  <!-- 16. Bioacoustic -->
+  <section id="mod-bioacoustic" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M16 6c0 3-3 4-6 4s-4 1-4 3 1 3 3 3c1 0 2 .5 2 2v2"/></svg>Bioacoustic</h2>
+    <p class="hint">Analyzes animal calls. Peak pattern matches known species.</p>
+    <button id="bioStart" class="big">Start</button>
+    <button id="bioStop" class="big stop hidden">Stop</button>
+    <canvas id="bioCanvas" width="800" height="400"></canvas>
+    <div class="readout"><div><small>Peak Hz</small><b id="bioPeak">—</b></div><div><small>Likely</small><b id="bioMatch">—</b></div></div>
+  </section>
+
+  <!-- 17. Material ID -->
+  <section id="mod-materialId" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><ellipse cx="12" cy="9" rx="8" ry="3"/></svg>Material ID</h2>
+    <p class="hint">Tap object. Resonance signature identifies material family.</p>
+    <button id="matStart" class="big">Start</button>
+    <button id="matStop" class="big stop hidden">Stop</button>
+    <canvas id="matCanvas" width="800" height="300"></canvas>
+    <div class="readout"><div><small>Peak</small><b id="matPeak">—</b></div><div><small>Decay</small><b id="matDecay">—</b></div><div><small>Match</small><b id="matMatch">—</b></div></div>
+  </section>
+
+  <!-- 18. TapShape -->
+  <section id="mod-tapShape" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M9 11V6a2 2 0 1 1 4 0v5"/></svg>TapShape</h2>
+    <p class="hint">Place phone on surface. Tap it. Detects 1-tap, 2-tap, 3-tap patterns.</p>
+    <button id="tapStart" class="big">Start</button>
+    <button id="tapStop" class="big stop hidden">Stop</button>
+    <div class="readout"><div><small>Taps</small><b id="tapCount">0</b></div><div><small>Last</small><b id="tapLast">—</b></div><div><small>Action</small><b id="tapAction">—</b></div></div>
+  </section>
+
+  <!-- 19. SkyScanner -->
+  <section id="mod-skyScanner" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/></svg>SkyScanner</h2>
+    <p class="hint">Point at sky. Shows direction, altitude, visible star count.</p>
+    <button id="skyStart" class="big">Start</button>
+    <button id="skyStop" class="big stop hidden">Stop</button>
+    <div class="readout"><div><small>Lat</small><b id="skyLat">—</b></div><div><small>Lon</small><b id="skyLon">—</b></div><div><small>Dir</small><b id="skyDir">—</b></div><div><small>Speed</small><b id="skySpd">—</b></div></div>
+  </section>
+
+  <!-- 20. SleepEye -->
+  <section id="mod-sleepEye" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>SleepEye</h2>
+    <p class="hint">Place beside bed. Tracks motion + noise events overnight.</p>
+    <button id="sleepStart" class="big">Start</button>
+    <button id="sleepStop" class="big stop hidden">Stop</button>
+    <canvas id="sleepCanvas" width="800" height="300"></canvas>
+    <div class="readout"><div><small>Motion</small><b id="sleepMotion">0</b></div><div><small>Noise</small><b id="sleepNoise">0</b></div><div><small>Events</small><b id="sleepEvents">0</b></div></div>
+  </section>
+
+  <!-- 21. SoundDrop -->
+  <section id="mod-soundDrop" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>SoundDrop</h2>
+    <p class="hint">Send tiny text between 2 phones via sound (FSK). 1-2 meters range.</p>
+    <textarea id="sdMsg" placeholder="Text to send (short)"></textarea>
+    <button id="sdSend" class="big">📡 Send</button>
+    <button id="sdRecv" class="big alt">👂 Receive</button>
+    <button id="sdRecvStop" class="big stop hidden">Stop Receiving</button>
+    <div class="readout"><div><small>Status</small><b id="sdStatus">Idle</b></div><div><small>Received</small><b id="sdGot">—</b></div></div>
+  </section>
+
+  <!-- 22. CipherAir -->
+  <section id="mod-cipherAir" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0"/></svg>CipherAir</h2>
+    <p class="hint">Ultrasonic hidden data. Silent to humans, transfer between phones.</p>
+    <textarea id="caMsg" placeholder="Hidden message"></textarea>
+    <button id="caSend" class="big">📡 Send (silent)</button>
+    <button id="caRecv" class="big alt">👂 Listen</button>
+    <button id="caRecvStop" class="big stop hidden">Stop</button>
+    <div class="readout"><div><small>Status</small><b id="caStatus">Idle</b></div><div><small>Received</small><b id="caGot">—</b></div></div>
+  </section>
+
+  <!-- 23. Rolling Shutter -->
+  <section id="mod-rollingShutter" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><rect x="3" y="7" width="14" height="10" rx="2"/></svg>Rolling Shutter</h2>
+    <p class="hint">Frame-by-frame pixel diff. Reveals tiny vibrations.</p>
+    <button id="rsStart" class="big">Start</button>
+    <button id="rsStop" class="big stop hidden">Stop</button>
+    <video id="rsVideo" playsinline muted></video>
+    <canvas id="rsCanvas" width="600" height="450"></canvas>
+  </section>
+
+  <!-- 24. PocketChem -->
+  <section id="mod-pocketChem" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/></svg>PocketChem</h2>
+    <p class="hint">Point at a liquid. Color-based pH estimate (needs calibration).</p>
+    <button id="pcStart" class="big">Start</button>
+    <button id="pcStop" class="big stop hidden">Stop</button>
+    <video id="pcVideo" playsinline muted></video>
+    <div id="pcSwatch" style="width:100%;height:80px;border-radius:12px;margin:10px 0;border:1px solid #222"></div>
+    <div class="readout"><div><small>R</small><b id="pcR">0</b></div><div><small>G</small><b id="pcG">0</b></div><div><small>B</small><b id="pcB">0</b></div><div><small>pH est.</small><b id="pcPh">—</b></div></div>
+  </section>
+
+  <!-- 25. PhoneScope -->
+  <section id="mod-phoneScope" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>PhoneScope</h2>
+    <p class="hint">Live waveform from mic — visual oscilloscope.</p>
+    <button id="psStart" class="big">Start</button>
+    <button id="psStop" class="big stop hidden">Stop</button>
+    <canvas id="psCanvas" width="800" height="400"></canvas>
+    <div class="readout"><div><small>RMS</small><b id="psRms">—</b></div><div><small>Peak</small><b id="psPeak">—</b></div></div>
+  </section>
+
+  <!-- 26. CipherBook -->
+  <section id="mod-cipherBook" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>CipherBook</h2>
+    <p class="hint">AES-256 encryption. Local only.</p>
+    <textarea id="cbText" placeholder="Text to encrypt/decrypt"></textarea>
+    <input id="cbPass" type="text" placeholder="Password">
+    <button id="cbEnc" class="big">🔐 Encrypt</button>
+    <button id="cbDec" class="big alt">🔓 Decrypt</button>
+    <textarea id="cbResult" placeholder="Result" readonly></textarea>
+  </section>
+
+  <!-- 27. Legacy Lock -->
+  <section id="mod-legacyLock" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/></svg>Legacy Lock</h2>
+    <p class="hint">Write letter. Lock with password. Unlock date-based.</p>
+    <textarea id="llMsg" placeholder="Your letter..."></textarea>
+    <input id="llPass" type="text" placeholder="Password">
+    <input id="llDate" type="text" placeholder="Unlock date (YYYY-MM-DD)">
+    <button id="llSave" class="big">💾 Lock Letter</button>
+    <button id="llLoad" class="big alt">📖 Unlock</button>
+    <div id="llResult" style="color:#4ade80;margin-top:10px;font-size:14px;white-space:pre-wrap"></div>
+  </section>
+
+  <!-- 28. OfflineMind -->
+  <section id="mod-offlineMind" class="module hidden">
+    <h2><svg viewBox="0 0 24 24"><path d="M9 4a4 4 0 0 0-4 4 3 3 0 0 0-1 5.8A3 3 0 0 0 7 18a3 3 0 0 0 5 1V4a3 3 0 0 0-3 0z"/><path d="M15 4a4 4 0 0 1 4 4 3 3 0 0 1 1 5.8A3 3 0 0 1 17 18a3 3 0 0 1-5 1"/></svg>OfflineMind</h2>
+    <p class="hint">Rule-based reasoning. No AI, no internet. Ask about mood, sleep, food, energy.</p>
+    <textarea id="omIn" placeholder="How are you feeling?"></textarea>
+    <button id="omAsk" class="big">🧠 Ask</button>
+    <div id="omLog" style="background:#151515;border-radius:10px;padding:12px;min-height:120px;font-size:14px;line-height:1.6;white-space:pre-wrap;color:#ccc"></div>
+  </section>
+
 </div>
 
 <script>
-const hub = document.getElementById('hub');
-const title = document.getElementById('title');
-const backBtn = document.getElementById('backBtn');
-const modules = document.querySelectorAll('.module');
-let activeModule = null;
-
-document.querySelectorAll('.mod').forEach(btn => {
-  btn.addEventListener('click', () => openModule(btn.dataset.mod));
-});
-
-backBtn.addEventListener('click', closeModule);
-
+const hub=document.getElementById('hub'),title=document.getElementById('title'),backBtn=document.getElementById('backBtn');
+const modules=document.querySelectorAll('.module');
+let activeModule=null;
+document.querySelectorAll('.mod').forEach(b=>b.addEventListener('click',()=>openModule(b.dataset.mod)));
+backBtn.addEventListener('click',closeModule);
 function openModule(name){
   hub.classList.add('hidden');
-  modules.forEach(m => m.classList.add('hidden'));
-  let el = document.getElementById('mod-' + name);
-  if(!el){
-    el = document.getElementById('mod-placeholder');
-    document.getElementById('phTitle').textContent = name;
-  }
+  modules.forEach(m=>m.classList.add('hidden'));
+  const el=document.getElementById('mod-'+name);
+  if(!el)return;
   el.classList.remove('hidden');
-  title.textContent = name;
+  title.textContent=name;
   backBtn.classList.remove('hidden');
-  activeModule = name;
-  if(startFns[name]) startFns[name]();
+  activeModule=name;
+  if(startFns[name])try{startFns[name]();}catch(e){console.error(e);}
 }
-
 function closeModule(){
-  if(activeModule && stopFns[activeModule]) stopFns[activeModule]();
-  modules.forEach(m => m.classList.add('hidden'));
-  hub.classList.remove('hidden');
-  title.textContent = 'Roach';
-  backBtn.classList.add('hidden');
-  activeModule = null;
+  if(activeModule&&stopFns[activeModule])try{stopFns[activeModule]();}catch(e){}
+  modules.forEach(m=>m.classList.add('hidden'));
+  hub.classList.remove('hidden');title.textContent='Roach';backBtn.classList.add('hidden');
+  activeModule=null;
 }
+const startFns={},stopFns={};
 
-const startFns = {};
-const stopFns = {};
-
-// ===== BatEar =====
+// ===== 1. BatEar =====
 (function(){
-  let audioCtx, analyser, source, raf, stream;
-  const canvas = document.getElementById('batEarCanvas');
-  const ctx = canvas.getContext('2d');
-  const levelEl = document.getElementById('batEarLevel');
-  const peakEl = document.getElementById('batEarPeak');
-  const dbEl = document.getElementById('batEarDb');
-
-  startFns.batEar = async () => {
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation:false, noiseSuppression:false, autoGainControl:false }
-      });
-    } catch(e){ alert('Microphone permission required: ' + e.message); return; }
-    audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-    source = audioCtx.createMediaStreamSource(stream);
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 4096;
-    source.connect(analyser);
+  let ac,an,src,raf,st;
+  const c=document.getElementById('batEarCanvas'),x=c.getContext('2d');
+  startFns.batEar=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});}catch(e){alert('Mic needed');return;}
+    ac=new(window.AudioContext||window.webkitAudioContext)();
+    src=ac.createMediaStreamSource(st);an=ac.createAnalyser();an.fftSize=4096;src.connect(an);
     document.getElementById('batEarStart').classList.add('hidden');
     document.getElementById('batEarStop').classList.remove('hidden');
-    draw();
+    loop();
   };
-
-  stopFns.batEar = () => {
+  stopFns.batEar=()=>{
     cancelAnimationFrame(raf);
-    if(stream) stream.getTracks().forEach(t => t.stop());
-    if(audioCtx) audioCtx.close();
+    if(st)st.getTracks().forEach(t=>t.stop());
+    if(ac)ac.close();
     document.getElementById('batEarStart').classList.remove('hidden');
     document.getElementById('batEarStop').classList.add('hidden');
   };
-
-  document.getElementById('batEarStart').onclick = startFns.batEar;
-  document.getElementById('batEarStop').onclick = stopFns.batEar;
-
-  function draw(){
-    const buf = new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteFrequencyData(buf);
-    const sr = audioCtx.sampleRate;
-    const binHz = sr / analyser.fftSize;
-
-    let maxV = 0, maxI = 0;
-    for(let i=2;i<buf.length;i++){ if(buf[i]>maxV){ maxV=buf[i]; maxI=i; } }
-    const peakHz = Math.round(maxI * binHz);
-    peakEl.textContent = peakHz + ' Hz';
-
-    let sum = 0;
-    for(let i=0;i<buf.length;i++) sum += buf[i];
-    const avg = sum / buf.length;
-    levelEl.style.width = Math.min(100, avg * 1.5) + '%';
-    const db = Math.round(20 * Math.log10(avg/255 + 1e-6));
-    dbEl.textContent = db + ' dB';
-
-    const w = canvas.width, h = canvas.height;
-    ctx.fillStyle = '#000'; ctx.fillRect(0,0,w,h);
-    ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 1;
-    for(let i=1;i<8;i++){ ctx.beginPath(); ctx.moveTo(i*w/8,0); ctx.lineTo(i*w/8,h); ctx.stroke(); }
-
-    const N = 128;
-    const step = Math.floor(buf.length / N);
-    for(let i=0;i<N;i++){
-      const v = buf[i*step] / 255;
-      const x = i * (w/N);
-      const bh = v * h;
-      const hue = 140 - v*140;
-      ctx.fillStyle = `hsl(${hue},90%,55%)`;
-      ctx.fillRect(x, h-bh, (w/N)-1, bh);
-    }
-    ctx.fillStyle = '#666'; ctx.font = '14px system-ui';
-    ctx.fillText('0 Hz', 8, 20);
-    ctx.fillText(Math.round(sr/2) + ' Hz', w-100, 20);
-
-    raf = requestAnimationFrame(draw);
+  document.getElementById('batEarStart').onclick=startFns.batEar;
+  document.getElementById('batEarStop').onclick=stopFns.batEar;
+  function loop(){
+    const buf=new Uint8Array(an.frequencyBinCount);an.getByteFrequencyData(buf);
+    const sr=ac.sampleRate,bh=sr/an.fftSize;
+    let mv=0,mi=0;for(let i=2;i<buf.length;i++)if(buf[i]>mv){mv=buf[i];mi=i;}
+    document.getElementById('batEarPeak').textContent=Math.round(mi*bh)+' Hz';
+    let sum=0;for(let i=0;i<buf.length;i++)sum+=buf[i];
+    const avg=sum/buf.length;
+    document.getElementById('batEarLevel').style.width=Math.min(100,avg*1.5)+'%';
+    document.getElementById('batEarDb').textContent=Math.round(20*Math.log10(avg/255+1e-6))+' dB';
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    x.strokeStyle='#1a1a1a';for(let i=1;i<8;i++){x.beginPath();x.moveTo(i*w/8,0);x.lineTo(i*w/8,h);x.stroke();}
+    const N=128,step=Math.floor(buf.length/N);
+    for(let i=0;i<N;i++){const v=buf[i*step]/255;x.fillStyle=`hsl(${140-v*140},90%,55%)`;x.fillRect(i*(w/N),h-v*h,(w/N)-1,v*h);}
+    raf=requestAnimationFrame(loop);
   }
 })();
 
-// ===== PulseLens =====
+// ===== 2. PulseLens =====
 (function(){
-  let stream, raf, samples=[], t0=0;
-  const video = document.getElementById('pulseVideo');
-  const canvas = document.getElementById('pulseCanvas');
-  const ctx = canvas.getContext('2d');
-  const bpmEl = document.getElementById('pulseBpm');
-  const sigEl = document.getElementById('pulseSig');
-  const c2 = document.createElement('canvas');
-  c2.width = 64; c2.height = 64;
-  const c2x = c2.getContext('2d', { willReadFrequently:true });
-
-  startFns.pulseLens = async () => {
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { ideal: 'environment' }, width: 320, height: 240 }
-      });
-    } catch(e){ alert('Camera permission required'); return; }
-    video.srcObject = stream;
-    await video.play();
-
-    const track = stream.getVideoTracks()[0];
-    const caps = track.getCapabilities ? track.getCapabilities() : {};
-    if(caps.torch){
-      try{ await track.applyConstraints({advanced:[{torch:true}]}); }catch(e){}
-    }
-
-    samples = []; t0 = performance.now();
+  let st,raf,samples=[],t0=0;
+  const v=document.getElementById('pulseVideo'),c=document.getElementById('pulseCanvas'),x=c.getContext('2d');
+  const c2=document.createElement('canvas');c2.width=64;c2.height=64;
+  const c2x=c2.getContext('2d',{willReadFrequently:true});
+  startFns.pulseLens=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:320,height:240}});}catch(e){alert('Camera needed');return;}
+    v.srcObject=st;await v.play();
+    const tr=st.getVideoTracks()[0];
+    const caps=tr.getCapabilities?tr.getCapabilities():{};
+    if(caps.torch)try{await tr.applyConstraints({advanced:[{torch:true}]});}catch(e){}
+    samples=[];t0=performance.now();
     document.getElementById('pulseStart').classList.add('hidden');
     document.getElementById('pulseStop').classList.remove('hidden');
     loop();
   };
-
-  stopFns.pulseLens = () => {
+  stopFns.pulseLens=()=>{
     cancelAnimationFrame(raf);
-    if(stream){
-      const track = stream.getVideoTracks()[0];
-      if(track && track.getCapabilities && track.getCapabilities().torch){
-        track.applyConstraints({advanced:[{torch:false}]}).catch(()=>{});
-      }
-      stream.getTracks().forEach(t => t.stop());
-    }
+    if(st){const tr=st.getVideoTracks()[0];if(tr&&tr.getCapabilities&&tr.getCapabilities().torch)tr.applyConstraints({advanced:[{torch:false}]}).catch(()=>{});st.getTracks().forEach(t=>t.stop());}
     document.getElementById('pulseStart').classList.remove('hidden');
     document.getElementById('pulseStop').classList.add('hidden');
   };
-
-  document.getElementById('pulseStart').onclick = startFns.pulseLens;
-  document.getElementById('pulseStop').onclick = stopFns.pulseLens;
-
+  document.getElementById('pulseStart').onclick=startFns.pulseLens;
+  document.getElementById('pulseStop').onclick=stopFns.pulseLens;
   function loop(){
-    c2x.drawImage(video, 0, 0, 64, 64);
-    const d = c2x.getImageData(0, 0, 64, 64).data;
-    let r=0,n=0;
-    for(let i=0;i<d.length;i+=4){ r+=d[i]; n++; }
-    r/=n;
-
-    samples.push({t: performance.now()-t0, v: r});
-    if(samples.length > 900) samples.shift();
-
-    const t = performance.now()-t0;
-    sigEl.textContent = r.toFixed(1);
-
-    const w = canvas.width, h = canvas.height;
-    ctx.fillStyle = '#000'; ctx.fillRect(0,0,w,h);
-    ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 1;
-    for(let i=1;i<8;i++){ ctx.beginPath(); ctx.moveTo(i*w/8,0); ctx.lineTo(i*w/8,h); ctx.stroke(); }
-    for(let i=1;i<4;i++){ ctx.beginPath(); ctx.moveTo(0,i*h/4); ctx.lineTo(w,i*h/4); ctx.stroke(); }
-
-    if(samples.length > 2){
-      const win = 8000;
-      const visible = samples.filter(s => t - s.t < win);
-      if(visible.length > 2){
-        let mn=Infinity, mx=-Infinity;
-        for(const s of visible){ if(s.v<mn)mn=s.v; if(s.v>mx)mx=s.v; }
-        const range = mx-mn || 1;
-
-        ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2.5;
-        ctx.beginPath();
-        visible.forEach((s,i) => {
-          const x = (1 - (t-s.t)/win) * w;
-          const y = h - ((s.v-mn)/range) * h * 0.75 - h*0.12;
-          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-        });
-        ctx.stroke();
-
-        const bpm = detectBpm(visible);
-        if(bpm) bpmEl.textContent = bpm;
+    c2x.drawImage(v,0,0,64,64);
+    const d=c2x.getImageData(0,0,64,64).data;
+    let r=0,n=0;for(let i=0;i<d.length;i+=4){r+=d[i];n++;}r/=n;
+    samples.push({t:performance.now()-t0,v:r});if(samples.length>900)samples.shift();
+    const t=performance.now()-t0;
+    document.getElementById('pulseSig').textContent=r.toFixed(1);
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    x.strokeStyle='#1a1a1a';for(let i=1;i<8;i++){x.beginPath();x.moveTo(i*w/8,0);x.lineTo(i*w/8,h);x.stroke();}
+    if(samples.length>2){
+      const win=8000,vis=samples.filter(s=>t-s.t<win);
+      if(vis.length>2){
+        let mn=Infinity,mx=-Infinity;
+        for(const s of vis){if(s.v<mn)mn=s.v;if(s.v>mx)mx=s.v;}
+        const rg=mx-mn||1;
+        x.strokeStyle='#ef4444';x.lineWidth=2.5;x.beginPath();
+        vis.forEach((s,i)=>{const xx=(1-(t-s.t)/win)*w;const yy=h-((s.v-mn)/rg)*h*0.75-h*0.12;if(i===0)x.moveTo(xx,yy);else x.lineTo(xx,yy);});
+        x.stroke();
+        if(vis.length>150){
+          const vals=vis.map(s=>s.v),mean=vals.reduce((a,b)=>a+b,0)/vals.length;
+          const sm=vals.map((_,i)=>{const a=Math.max(0,i-3),b=Math.min(vals.length,i+4);let s=0;for(let k=a;k<b;k++)s+=vals[k];return s/(b-a);});
+          let p=0,last=-1e9;
+          for(let i=2;i<sm.length-2;i++)if(sm[i]>sm[i-2]&&sm[i]>sm[i+2]&&sm[i]>mean&&vis[i].t-last>400){p++;last=vis[i].t;}
+          const dur=(vis[vis.length-1].t-vis[0].t)/1000;
+          if(dur>6){const bpm=Math.round((p/dur)*60);if(bpm>40&&bpm<180)document.getElementById('pulseBpm').textContent=bpm;}
+        }
       }
     }
-    raf = requestAnimationFrame(loop);
-  }
-
-  function detectBpm(s){
-    if(s.length < 150) return null;
-    const vals = s.map(x => x.v);
-    const mean = vals.reduce((a,b)=>a+b,0)/vals.length;
-    const sm = vals.map((_,i) => {
-      const a = Math.max(0, i-3), b = Math.min(vals.length, i+4);
-      let sum=0; for(let k=a;k<b;k++) sum+=vals[k];
-      return sum/(b-a);
-    });
-    let peaks = 0, lastPeak = -1e9;
-    for(let i=2;i<sm.length-2;i++){
-      if(sm[i]>sm[i-2] && sm[i]>sm[i+2] && sm[i] > mean){
-        if(s[i].t - lastPeak > 400){ peaks++; lastPeak = s[i].t; }
-      }
-    }
-    const dur = (s[s.length-1].t - s[0].t)/1000;
-    if(dur < 6) return null;
-    const bpm = Math.round((peaks/dur)*60);
-    return (bpm > 40 && bpm < 180) ? bpm : null;
+    raf=requestAnimationFrame(loop);
   }
 })();
 
-// PWA service worker
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('service-worker.js').catch(()=>{});
-}
+// ===== 3. GeoPhone =====
+(function(){
+  let raf,series=[];
+  const c=document.getElementById('geoCanvas'),x=c.getContext('2d');
+  function onM(e){
+    const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;
+    document.getElementById('gX').textContent=(a.x||0).toFixed(2);
+    document.getElementById('gY').textContent=(a.y||0).toFixed(2);
+    document.getElementById('gZ').textContent=(a.z||0).toFixed(2);
+    const m=Math.hypot(a.x||0,a.y||0,a.z||0);
+    document.getElementById('gM').textContent=m.toFixed(2);
+    series.push({t:performance.now(),v:m});if(series.length>2000)series.shift();
+  }
+  startFns.geoPhone=async()=>{
+    if(typeof DeviceMotionEvent!=='undefined'&&DeviceMotionEvent.requestPermission)try{await DeviceMotionEvent.requestPermission();}catch(e){}
+    window.addEventListener('devicemotion',onM);
+    document.getElementById('geoStart').classList.add('hidden');
+    document.getElementById('geoStop').classList.remove('hidden');
+    draw();
+  };
+  stopFns.geoPhone=()=>{window.removeEventListener('devicemotion',onM);cancelAnimationFrame(raf);document.getElementById('geoStart').classList.remove('hidden');document.getElementById('geoStop').classList.add('hidden');};
+  document.getElementById('geoStart').onclick=startFns.geoPhone;
+  document.getElementById('geoStop').onclick=stopFns.geoPhone;
+  function draw(){
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    x.strokeStyle='#1a1a1a';for(let i=1;i<5;i++){x.beginPath();x.moveTo(0,i*h/5);x.lineTo(w,i*h/5);x.stroke();}
+    if(series.length>2){
+      let mn=Infinity,mx=-Infinity;for(const s of series){if(s.v<mn)mn=s.v;if(s.v>mx)mx=s.v;}
+      const rg=mx-mn||1;x.strokeStyle='#4ade80';x.lineWidth=2;x.beginPath();
+      const dur=30000,now=performance.now();
+      series.filter(s=>now-s.t<dur).forEach((s,i)=>{const xx=(1-(now-s.t)/dur)*w;const yy=h-((s.v-mn)/rg)*h*0.9-h*0.05;if(i===0)x.moveTo(xx,yy);else x.lineTo(xx,yy);});
+      x.stroke();
+    }
+    raf=requestAnimationFrame(draw);
+  }
+})();
+
+// ===== 4. SoundShape =====
+(function(){
+  let ac,an,src,raf,st,rot=0;
+  const c=document.getElementById('shapeCanvas'),x=c.getContext('2d');
+  startFns.soundShape=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({audio:true});}catch(e){alert('Mic needed');return;}
+    ac=new(window.AudioContext||window.webkitAudioContext)();src=ac.createMediaStreamSource(st);
+    an=ac.createAnalyser();an.fftSize=2048;src.connect(an);
+    document.getElementById('shapeStart').classList.add('hidden');
+    document.getElementById('shapeStop').classList.remove('hidden');
+    draw();
+  };
+  stopFns.soundShape=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());if(ac)ac.close();document.getElementById('shapeStart').classList.remove('hidden');document.getElementById('shapeStop').classList.add('hidden');};
+  document.getElementById('shapeStart').onclick=startFns.soundShape;
+  document.getElementById('shapeStop').onclick=stopFns.soundShape;
+  function draw(){
+    const buf=new Uint8Array(an.frequencyBinCount);an.getByteFrequencyData(buf);
+    const w=c.width,h=c.height;x.fillStyle='rgba(0,0,0,0.15)';x.fillRect(0,0,w,h);
+    const cx=w/2,cy=h/2;rot+=0.005;
+    const N=128,step=Math.floor(buf.length/N);
+    x.strokeStyle='#4ade80';x.lineWidth=2;x.beginPath();
+    for(let i=0;i<N;i++){
+      const v=buf[i*step]/255,a=(i/N)*Math.PI*2+rot,r=40+v*200;
+      const px=cx+Math.cos(a)*r,py=cy+Math.sin(a)*r;
+      if(i===0)x.moveTo(px,py);else x.lineTo(px,py);
+    }
+    x.closePath();x.stroke();
+    x.strokeStyle=`hsla(${(rot*80)%360},80%,60%,0.35)`;
+    for(let ring=0;ring<5;ring++){x.beginPath();const rr=60+ring*40+Math.sin(rot*3+ring)*10;x.arc(cx,cy,rr,0,Math.PI*2);x.stroke();}
+    raf=requestAnimationFrame(draw);
+  }
+})();
+
+// ===== 5. ChronoLens =====
+(function(){
+  let st,raf,count=0,last=0;
+  const v=document.getElementById('chronoVideo'),c=document.getElementById('chronoCanvas'),x=c.getContext('2d');
+  const c2=document.createElement('canvas'),c2x=c2.getContext('2d');
+  startFns.chronoLens=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}}});}catch(e){alert('Camera needed');return;}
+    v.srcObject=st;await v.play();
+    c2.width=c.width;c2.height=c.height;
+    x.fillStyle='#000';x.fillRect(0,0,c.width,c.height);
+    count=0;last=0;
+    document.getElementById('chronoStart').classList.add('hidden');
+    document.getElementById('chronoStop').classList.remove('hidden');
+    document.getElementById('chronoSave').classList.add('hidden');
+    loop();
+  };
+  stopFns.chronoLens=()=>{
+    cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());
+    document.getElementById('chronoStart').classList.remove('hidden');
+    document.getElementById('chronoStop').classList.add('hidden');
+    document.getElementById('chronoSave').classList.remove('hidden');
+  };
+  document.getElementById('chronoStart').onclick=startFns.chronoLens;
+  document.getElementById('chronoStop').onclick=stopFns.chronoLens;
+  document.getElementById('chronoSave').onclick=()=>{const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='chrono-'+Date.now()+'.png';a.click();};
+  function loop(){
+    const now=performance.now();
+    if(now-last>500){
+      last=now;
+      c2x.drawImage(v,0,0,c2.width,c2.height);
+      x.globalCompositeOperation='lighten';x.drawImage(c2,0,0);x.globalCompositeOperation='source-over';
+      count++;document.getElementById('chronoCount').textContent=count;
+    }
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 6. Cosmic Ray =====
+(function(){
+  let st,raf,hits=0,t0=0,lastB=null;
+  const v=document.getElementById('cosmicVideo');
+  const c2=document.createElement('canvas');c2.width=128;c2.height=128;
+  const c2x=c2.getContext('2d',{willReadFrequently:true});
+  startFns.cosmicRay=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}}});}catch(e){alert('Camera needed');return;}
+    v.srcObject=st;await v.play();
+    hits=0;t0=performance.now();lastB=null;
+    document.getElementById('cosmicHits').textContent='0';
+    document.getElementById('cosmicStart').classList.add('hidden');
+    document.getElementById('cosmicStop').classList.remove('hidden');
+    loop();
+  };
+  stopFns.cosmicRay=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());document.getElementById('cosmicStart').classList.remove('hidden');document.getElementById('cosmicStop').classList.add('hidden');};
+  document.getElementById('cosmicStart').onclick=startFns.cosmicRay;
+  document.getElementById('cosmicStop').onclick=stopFns.cosmicRay;
+  function loop(){
+    c2x.drawImage(v,0,0,128,128);
+    const d=c2x.getImageData(0,0,128,128).data;
+    let b=0;for(let i=0;i<d.length;i+=4){const s=d[i]+d[i+1]+d[i+2];if(s>550)b++;}
+    if(lastB!==null&&b-lastB>5){hits++;document.getElementById('cosmicHits').textContent=hits;if(navigator.vibrate)navigator.vibrate(40);}
+    lastB=b;
+    const el=(performance.now()-t0)/1000;
+    document.getElementById('cosmicTime').textContent=Math.round(el)+'s';
+    if(el>3)document.getElementById('cosmicRate').textContent=Math.round((hits/el)*60);
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 7. SpectroLens =====
+(function(){
+  let st,raf;
+  const v=document.getElementById('specVideo'),c=document.getElementById('specCanvas'),x=c.getContext('2d');
+  const c2=document.createElement('canvas');c2.width=64;c2.height=64;
+  const c2x=c2.getContext('2d',{willReadFrequently:true});
+  startFns.spectroLens=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}}});}catch(e){alert('Camera needed');return;}
+    v.srcObject=st;await v.play();
+    document.getElementById('specStart').classList.add('hidden');
+    document.getElementById('specStop').classList.remove('hidden');
+    loop();
+  };
+  stopFns.spectroLens=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());document.getElementById('specStart').classList.remove('hidden');document.getElementById('specStop').classList.add('hidden');};
+  document.getElementById('specStart').onclick=startFns.spectroLens;
+  document.getElementById('specStop').onclick=stopFns.spectroLens;
+  function loop(){
+    c2x.drawImage(v,0,0,64,64);
+    const d=c2x.getImageData(0,0,64,64).data;
+    let r=0,g=0,b=0,n=0;for(let i=0;i<d.length;i+=4){r+=d[i];g+=d[i+1];b+=d[i+2];n++;}
+    r/=n;g/=n;b/=n;
+    document.getElementById('sR').textContent=Math.round(r);
+    document.getElementById('sG').textContent=Math.round(g);
+    document.getElementById('sB').textContent=Math.round(b);
+    document.getElementById('specSwatch').style.background=`rgb(${r|0},${g|0},${b|0})`;
+    const t=4600*(1/(1+Math.exp((b-r)/40))-0.5)+5500;
+    document.getElementById('sT').textContent=Math.round(t)+' K';
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    const bw=w/3;
+    x.fillStyle='#ef4444';x.fillRect(0,h-(r/255)*h,bw-2,(r/255)*h);
+    x.fillStyle='#22c55e';x.fillRect(bw,h-(g/255)*h,bw-2,(g/255)*h);
+    x.fillStyle='#3b82f6';x.fillRect(bw*2,h-(b/255)*h,bw-2,(b/255)*h);
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 8. GravityWell =====
+(function(){
+  let raf,series=[],t0=0,peak=0;
+  const c=document.getElementById('gravCanvas'),x=c.getContext('2d');
+  function onM(e){
+    const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;
+    const g=Math.hypot(a.x||0,a.y||0,a.z||0)/9.81;
+    if(g>peak){peak=g;document.getElementById('gPeak').textContent=g.toFixed(2);}
+    document.getElementById('gCur').textContent=g.toFixed(2);
+    series.push({t:performance.now()-t0,v:g});if(series.length>1500)series.shift();
+    document.getElementById('gN').textContent=series.length;
+  }
+  startFns.gravityWell=async()=>{
+    if(typeof DeviceMotionEvent!=='undefined'&&DeviceMotionEvent.requestPermission)try{await DeviceMotionEvent.requestPermission();}catch(e){}
+    window.addEventListener('devicemotion',onM);
+    series=[];peak=0;t0=performance.now();
+    document.getElementById('gravStart').classList.add('hidden');
+    document.getElementById('gravStop').classList.remove('hidden');
+    draw();
+  };
+  stopFns.gravityWell=()=>{window.removeEventListener('devicemotion',onM);cancelAnimationFrame(raf);document.getElementById('gravStart').classList.remove('hidden');document.getElementById('gravStop').classList.add('hidden');};
+  document.getElementById('gravStart').onclick=startFns.gravityWell;
+  document.getElementById('gravStop').onclick=stopFns.gravityWell;
+  function draw(){
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    x.strokeStyle='#1a1a1a';for(let i=1;i<5;i++){x.beginPath();x.moveTo(0,i*h/5);x.lineTo(w,i*h/5);x.stroke();}
+    if(series.length>2){
+      const mx=Math.max(3,peak*1.1);
+      x.strokeStyle='#4ade80';x.lineWidth=2;x.beginPath();
+      const dur=15000,now=performance.now()-t0;
+      series.filter(s=>now-s.t<dur).forEach((s,i)=>{const xx=(1-(now-s.t)/dur)*w;const yy=h-(s.v/mx)*h*0.9-h*0.05;if(i===0)x.moveTo(xx,yy);else x.lineTo(xx,yy);});
+      x.stroke();
+    }
+    raf=requestAnimationFrame(draw);
+  }
+})();
+
+// ===== 9. SenseFusion =====
+(function(){
+  let raf,md={x:0,y:0,z:0},al=0,ac,an,src,st;
+  const c=document.getElementById('fusionCanvas'),x=c.getContext('2d');
+  function onM(e){const a=e.accelerationIncludingGravity||e.acceleration;if(a)md={x:a.x||0,y:a.y||0,z:a.z||0};}
+  startFns.senseFusion=async()=>{
+    if(typeof DeviceMotionEvent!=='undefined'&&DeviceMotionEvent.requestPermission)try{await DeviceMotionEvent.requestPermission();}catch(e){}
+    window.addEventListener('devicemotion',onM);
+    try{st=await navigator.mediaDevices.getUserMedia({audio:true});ac=new(window.AudioContext||window.webkitAudioContext)();src=ac.createMediaStreamSource(st);an=ac.createAnalyser();an.fftSize=512;src.connect(an);}catch(e){}
+    if(navigator.getBattery)navigator.getBattery().then(b=>{const u=()=>document.getElementById('fBat').textContent=Math.round(b.level*100)+'%';u();b.addEventListener('levelchange',u);});
+    document.getElementById('fusionStart').classList.add('hidden');
+    document.getElementById('fusionStop').classList.remove('hidden');
+    draw();
+  };
+  stopFns.senseFusion=()=>{window.removeEventListener('devicemotion',onM);cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());if(ac)ac.close();document.getElementById('fusionStart').classList.remove('hidden');document.getElementById('fusionStop').classList.add('hidden');};
+  document.getElementById('fusionStart').onclick=startFns.senseFusion;
+  document.getElementById('fusionStop').onclick=stopFns.senseFusion;
+  function draw(){
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    const mag=Math.hypot(md.x,md.y,md.z);document.getElementById('fAcc').textContent=mag.toFixed(2);
+    const cx1=w/4,cy1=h/2;
+    x.strokeStyle='#333';x.lineWidth=1;
+    x.beginPath();x.arc(cx1,cy1,80,0,Math.PI*2);x.stroke();
+    x.beginPath();x.arc(cx1,cy1,40,0,Math.PI*2);x.stroke();
+    const ax=Math.max(-1,Math.min(1,md.x/10)),ay=Math.max(-1,Math.min(1,md.y/10));
+    x.fillStyle='#4ade80';x.beginPath();x.arc(cx1+ax*80,cy1+ay*80,10,0,Math.PI*2);x.fill();
+    const bx=w/2+20,bw=w/2-40;
+    if(an){
+      const buf=new Uint8Array(an.frequencyBinCount);an.getByteFrequencyData(buf);
+      let s=0;for(let i=0;i<buf.length;i++)s+=buf[i];
+      al=s/buf.length;document.getElementById('fAudio').textContent=Math.round(al);
+      const N=32,stp=Math.floor(buf.length/N);
+      for(let i=0;i<N;i++){const v=buf[i*stp]/255;x.fillStyle=`hsl(${140-v*140},80%,55%)`;x.fillRect(bx+i*(bw/N),h-20-v*(h-40),(bw/N)-2,v*(h-40));}
+    }
+    x.fillStyle='#666';x.font='14px system-ui';x.fillText('Accel',20,25);x.fillText('Audio',w/2+20,25);
+    raf=requestAnimationFrame(draw);
+  }
+})();
+
+// ===== 10. PathReplay =====
+(function(){
+  let wid=null,pts=[],dist=0;
+  const c=document.getElementById('pathCanvas'),x=c.getContext('2d');
+  function draw(){
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    if(pts.length<2){x.fillStyle='#333';x.font='16px system-ui';x.fillText('No path recorded yet',30,40);return;}
+    let mnLa=Infinity,mxLa=-Infinity,mnLo=Infinity,mxLo=-Infinity;
+    for(const p of pts){if(p.lat<mnLa)mnLa=p.lat;if(p.lat>mxLa)mxLa=p.lat;if(p.lon<mnLo)mnLo=p.lon;if(p.lon>mxLo)mxLo=p.lon;}
+    const pLa=(mxLa-mnLa)||0.0001,pLo=(mxLo-mnLo)||0.0001;
+    x.strokeStyle='#4ade80';x.lineWidth=3;x.beginPath();
+    pts.forEach((p,i)=>{const px=40+((p.lon-mnLo)/pLo)*(w-80);const py=h-40-((p.lat-mnLa)/pLa)*(h-80);if(i===0)x.moveTo(px,py);else x.lineTo(px,py);});
+    x.stroke();
+    const last=pts[pts.length-1];const lx=40+((last.lon-mnLo)/pLo)*(w-80);const ly=h-40-((last.lat-mnLa)/pLa)*(h-80);
+    x.fillStyle='#ef4444';x.beginPath();x.arc(lx,ly,8,0,Math.PI*2);x.fill();
+  }
+  startFns.pathReplay=()=>{
+    if(!navigator.geolocation){alert('GPS not available');return;}
+    document.getElementById('pathStart').classList.add('hidden');
+    document.getElementById('pathStop').classList.remove('hidden');
+    wid=navigator.geolocation.watchPosition(p=>{
+      pts.push({lat:p.coords.latitude,lon:p.coords.longitude,t:Date.now(),spd:p.coords.speed||0});
+      if(pts.length>1){const a=pts[pts.length-2],b=pts[pts.length-1];dist+=hav(a.lat,a.lon,b.lat,b.lon);}
+      document.getElementById('pathPts').textContent=pts.length;
+      document.getElementById('pathDist').textContent=dist.toFixed(0)+' m';
+      document.getElementById('pathSpd').textContent=((p.coords.speed||0)*3.6).toFixed(1)+' km/h';
+      draw();
+    },e=>alert('GPS error: '+e.message),{enableHighAccuracy:true,maximumAge:1000});
+  };
+  stopFns.pathReplay=()=>{if(wid!==null)navigator.geolocation.clearWatch(wid);wid=null;document.getElementById('pathStart').classList.remove('hidden');document.getElementById('pathStop').classList.add('hidden');};
+  document.getElementById('pathStart').onclick=startFns.pathReplay;
+  document.getElementById('pathStop').onclick=stopFns.pathReplay;
+  document.getElementById('pathClear').onclick=()=>{pts=[];dist=0;document.getElementById('pathPts').textContent='0';document.getElementById('pathDist').textContent='0 m';document.getElementById('pathSpd').textContent='0 km/h';draw();};
+  draw();
+  function hav(a,b,c,d){const R=6371000,f1=a*Math.PI/180,f2=c*Math.PI/180,df=(c-a)*Math.PI/180,dl=(d-b)*Math.PI/180;const x=Math.sin(df/2)**2+Math.cos(f1)*Math.cos(f2)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
+})();
+
+// ===== 11. DeadDrop =====
+(function(){
+  let loc=null;let drops=JSON.parse(localStorage.getItem('roach_drops')||'[]');
+  document.getElementById('ddLocate').onclick=()=>{
+    if(!navigator.geolocation){alert('GPS needed');return;}
+    navigator.geolocation.getCurrentPosition(p=>{loc={lat:p.coords.latitude,lon:p.coords.longitude};document.getElementById('ddLat').textContent=loc.lat.toFixed(5);document.getElementById('ddLon').textContent=loc.lon.toFixed(5);},e=>alert('GPS error'));
+  };
+  document.getElementById('ddSave').onclick=()=>{
+    if(!loc){alert('Get location first');return;}
+    const msg=document.getElementById('ddMsg').value.trim(),pin=document.getElementById('ddPin').value.trim();
+    if(!msg||!pin){alert('Message + PIN required');return;}
+    drops.push({lat:loc.lat,lon:loc.lon,msg,pin,t:Date.now()});
+    localStorage.setItem('roach_drops',JSON.stringify(drops));
+    document.getElementById('ddMsg').value='';document.getElementById('ddPin').value='';
+    document.getElementById('ddCount').textContent=drops.length;alert('Drop saved ✓');
+  };
+  document.getElementById('ddNearby').onclick=()=>{
+    if(!navigator.geolocation){alert('GPS needed');return;}
+    navigator.geolocation.getCurrentPosition(p=>{
+      const me={lat:p.coords.latitude,lon:p.coords.longitude};
+      const near=drops.filter(d=>hav(me.lat,me.lon,d.lat,d.lon)<100);
+      const list=document.getElementById('ddList');list.innerHTML='';
+      if(near.length===0){list.innerHTML='<p style="color:#888;margin-top:10px">No drops within 100m</p>';return;}
+      near.forEach(d=>{
+        const div=document.createElement('div');div.className='drop-item';
+        div.innerHTML=`<div style="color:#4ade80;font-size:12px">${new Date(d.t).toLocaleString()}</div>
+          <input type="text" inputmode="numeric" placeholder="PIN" style="width:100%;padding:8px;margin-top:6px;border-radius:6px;background:#0a0a0a;color:#fff;border:1px solid #333"/>
+          <button style="width:100%;padding:10px;margin-top:6px;border:none;border-radius:6px;background:#4ade80;color:#000;font-weight:700;cursor:pointer">Unlock</button>
+          <div class="result" style="color:#4ade80;margin-top:8px;font-size:14px"></div>`;
+        const inp=div.querySelector('input'),btn=div.querySelector('button'),res=div.querySelector('.result');
+        btn.onclick=()=>{if(inp.value===d.pin){res.textContent='🔓 '+d.msg;res.style.color='#4ade80';}else{res.textContent='❌ Wrong PIN';res.style.color='#ef4444';}};
+        list.appendChild(div);
+      });
+    });
+  };
+  document.getElementById('ddCount').textContent=drops.length;
+  function hav(a,b,c,d){const R=6371000,f1=a*Math.PI/180,f2=c*Math.PI/180,df=(c-a)*Math.PI/180,dl=(d-b)*Math.PI/180;const x=Math.sin(df/2)**2+Math.cos(f1)*Math.cos(f2)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
+})();
+
+// ===== 12. LightGuard =====
+(function(){
+  let st,raf,samples=[],t0=0;
+  const v=document.getElementById('lightVideo'),c=document.getElementById('lightCanvas'),x=c.getContext('2d');
+  const c2=document.createElement('canvas');c2.width=64;c2.height=64;
+  const c2x=c2.getContext('2d',{willReadFrequently:true});
+  startFns.lightGuard=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}}});}catch(e){alert('Camera needed');return;}
+    v.srcObject=st;await v.play();
+    samples=[];t0=performance.now();
+    document.getElementById('lightStart').classList.add('hidden');
+    document.getElementById('lightStop').classList.remove('hidden');
+    loop();
+  };
+  stopFns.lightGuard=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());document.getElementById('lightStart').classList.remove('hidden');document.getElementById('lightStop').classList.add('hidden');};
+  document.getElementById('lightStart').onclick=startFns.lightGuard;
+  document.getElementById('lightStop').onclick=stopFns.lightGuard;
+  function loop(){
+    c2x.drawImage(v,0,0,64,64);
+    const d=c2x.getImageData(0,0,64,64).data;
+    let r=0,g=0,b=0,n=0;for(let i=0;i<d.length;i+=4){r+=d[i];g+=d[i+1];b+=d[i+2];n++;}
+    r/=n;g/=n;b/=n;
+    const lum=0.2126*r+0.7152*g+0.0722*b;
+    samples.push({t:performance.now()-t0,v:lum});if(samples.length>400)samples.shift();
+    document.getElementById('lgLux').textContent=Math.round(lum*3);
+    let tone='Neutral';if(r>g&&r>b)tone='Warm';else if(b>r&&b>g)tone='Cool';
+    document.getElementById('lgTone').textContent=tone;
+    if(samples.length>60){
+      const vals=samples.map(s=>s.v),mean=vals.reduce((a,b)=>a+b,0)/vals.length;
+      let cr=0;for(let i=1;i<vals.length;i++)if((vals[i-1]-mean)*(vals[i]-mean)<0)cr++;
+      const dur=(samples[samples.length-1].t-samples[0].t)/1000;
+      document.getElementById('lgFlicker').textContent=(dur>0?(cr/2)/dur:0).toFixed(0)+' Hz';
+    }
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    x.strokeStyle='#1a1a1a';for(let i=1;i<8;i++){x.beginPath();x.moveTo(i*w/8,0);x.lineTo(i*w/8,h);x.stroke();}
+    if(samples.length>2){
+      let mn=Infinity,mx=-Infinity;for(const s of samples){if(s.v<mn)mn=s.v;if(s.v>mx)mx=s.v;}
+      const rg=mx-mn||1,dur=8000,now=performance.now()-t0;
+      x.strokeStyle='#facc15';x.lineWidth=2.5;x.beginPath();
+      samples.forEach((s,i)=>{const xx=(1-(now-s.t)/dur)*w;const yy=h-((s.v-mn)/rg)*h*0.85-h*0.075;if(i===0)x.moveTo(xx,yy);else x.lineTo(xx,yy);});
+      x.stroke();
+    }
+    x.fillStyle=`rgb(${r|0},${g|0},${b|0})`;x.fillRect(w-70,10,60,60);
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 13. MicroScope =====
+(function(){
+  let st,raf,zoom=1,con=100;
+  const v=document.getElementById('microVideo'),c=document.getElementById('microCanvas'),x=c.getContext('2d');
+  startFns.microScope=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1440}}});}catch(e){alert('Camera needed');return;}
+    v.srcObject=st;await v.play();
+    document.getElementById('microStart').classList.add('hidden');
+    document.getElementById('microStop').classList.remove('hidden');
+    loop();
+  };
+  stopFns.microScope=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());document.getElementById('microStart').classList.remove('hidden');document.getElementById('microStop').classList.add('hidden');};
+  document.getElementById('microStart').onclick=startFns.microScope;
+  document.getElementById('microStop').onclick=stopFns.microScope;
+  document.getElementById('microZoom').oninput=e=>{zoom=parseFloat(e.target.value);document.getElementById('microZoomVal').textContent=zoom.toFixed(1);};
+  document.getElementById('microCon').oninput=e=>{con=parseInt(e.target.value);document.getElementById('microConVal').textContent=con;};
+  document.getElementById('microSnapshot').onclick=()=>{const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='micro-'+Date.now()+'.png';a.click();};
+  function loop(){
+    const vw=v.videoWidth||1280,vh=v.videoHeight||720;
+    const sw=vw/zoom,sh=vh/zoom,sx=(vw-sw)/2,sy=(vh-sh)/2;
+    x.filter=`contrast(${con}%) saturate(120%)`;
+    x.drawImage(v,sx,sy,sw,sh,0,0,c.width,c.height);
+    x.filter='none';
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 14. EchoSonar =====
+(function(){
+  let ac,mic,an,t0=0,pingT=0,listening=false,sbuf=[];
+  const c=document.getElementById('sonarCanvas'),x=c.getContext('2d');
+  document.getElementById('sonarTempIn').oninput=e=>{document.getElementById('sonarTempVal').textContent=e.target.value;document.getElementById('sonarTemp').textContent=e.target.value+' °C';};
+  document.getElementById('sonarPing').onclick=async()=>{
+    if(!ac){
+      ac=new(window.AudioContext||window.webkitAudioContext)();
+      try{mic=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+        const src=ac.createMediaStreamSource(mic);an=ac.createAnalyser();an.fftSize=2048;src.connect(an);
+      }catch(e){alert('Mic needed');return;}
+      listenLoop();
+    }
+    document.getElementById('sonarDist').textContent='...';
+    document.getElementById('sonarDelay').textContent='...';
+    const t=ac.currentTime,osc=ac.createOscillator(),g=ac.createGain();
+    osc.type='sine';osc.frequency.setValueAtTime(2000,t);osc.frequency.exponentialRampToValueAtTime(8000,t+0.06);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(1,t+0.005);g.gain.linearRampToValueAtTime(0,t+0.07);
+    osc.connect(g).connect(ac.destination);osc.start(t);osc.stop(t+0.08);
+    pingT=performance.now();listening=true;sbuf=[];
+    setTimeout(()=>{listening=false;detect();},300);
+  };
+  function listenLoop(){
+    if(!an)return;
+    const buf=new Uint8Array(an.frequencyBinCount);an.getByteFrequencyData(buf);
+    if(listening){
+      const sr=ac.sampleRate,bh=sr/an.fftSize;
+      let e=0;for(let i=0;i<buf.length;i++){const hz=i*bh;if(hz>1500&&hz<9000)e+=buf[i];}
+      sbuf.push({t:performance.now()-pingT,e});
+    }
+    const w=c.width,h=c.height;x.fillStyle='rgba(0,0,0,0.3)';x.fillRect(0,0,w,h);
+    if(sbuf.length>2){
+      let mx=0;for(const s of sbuf)if(s.e>mx)mx=s.e;if(mx===0)mx=1;
+      x.strokeStyle='#4ade80';x.lineWidth=2;x.beginPath();
+      sbuf.forEach((s,i)=>{const xx=(s.t/300)*w;const yy=h-(s.e/mx)*h*0.9-5;if(i===0)x.moveTo(xx,yy);else x.lineTo(xx,yy);});
+      x.stroke();
+    }
+    requestAnimationFrame(listenLoop);
+  }
+  function detect(){
+    if(sbuf.length<20){document.getElementById('sonarDist').textContent='No echo';return;}
+    let mx=0,mt=0;const si=sbuf.findIndex(s=>s.t>15);
+    for(let i=Math.max(0,si);i<sbuf.length;i++)if(sbuf[i].e>mx){mx=sbuf[i].e;mt=sbuf[i].t;}
+    if(mx<500){document.getElementById('sonarDist').textContent='No echo';document.getElementById('sonarDelay').textContent='—';return;}
+    const tmp=parseFloat(document.getElementById('sonarTempIn').value);
+    const cs=331.3+0.606*tmp;
+    const d=(cs*(mt/1000))/2;
+    document.getElementById('sonarDist').textContent=d.toFixed(2)+' m';
+    document.getElementById('sonarDelay').textContent=mt.toFixed(1)+' ms';
+  }
+})();
+
+// ===== 15. SteganoCam =====
+(function(){
+  let img=null;
+  document.getElementById('stegPick').onclick=()=>document.getElementById('stegFile').click();
+  document.getElementById('stegFile').onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=ev=>{img=new Image();img.onload=()=>alert('Image loaded: '+img.width+'x'+img.height);img.src=ev.target.result;};
+    r.readAsDataURL(f);
+  };
+  document.getElementById('stegEncode').onclick=()=>{
+    if(!img){alert('Pick an image first');return;}
+    const msg=document.getElementById('stegMsg').value,pin=document.getElementById('stegPin').value;
+    if(!msg||!pin){alert('Message + PIN needed');return;}
+    const payload=pin+'|'+msg+'|END';
+    const c=document.createElement('canvas');c.width=img.width;c.height=img.height;
+    const x=c.getContext('2d');x.drawImage(img,0,0);
+    const d=x.getImageData(0,0,c.width,c.height);
+    const data=d.data;
+    if(payload.length*8 > data.length/4){alert('Image too small for this message');return;}
+    const bytes=new TextEncoder().encode(payload);
+    let bit=0;
+    for(let i=0;i<data.length && bit<bytes.length*8;i+=4){
+      for(let ch=0;ch<3 && bit<bytes.length*8;ch++){
+        const b=(bytes[bit>>3]>>(7-(bit&7)))&1;
+        data[i+ch]=(data[i+ch]&0xFE)|b;
+        bit++;
+      }
+    }
+    x.putImageData(d,0,0);
+    const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='steg-'+Date.now()+'.png';a.click();
+  };
+  document.getElementById('stegDecode').onclick=()=>{
+    const f=document.getElementById('stegDecodeFile').files[0];
+    const pin=document.getElementById('stegDecodePin').value;
+    if(!f||!pin){alert('File + PIN needed');return;}
+    const r=new FileReader();
+    r.onload=ev=>{
+      const im=new Image();
+      im.onload=()=>{
+        const c=document.createElement('canvas');c.width=im.width;c.height=im.height;
+        const x=c.getContext('2d');x.drawImage(im,0,0);
+        const d=x.getImageData(0,0,c.width,c.height).data;
+        const bytes=[];
+        let cur=0,cnt=0;
+        for(let i=0;i<d.length&&bytes.length<500;i+=4){
+          for(let ch=0;ch<3;ch++){
+            cur=(cur<<1)|(d[i+ch]&1);cnt++;
+            if(cnt===8){bytes.push(cur);cur=0;cnt=0;}
+          }
+        }
+        const txt=new TextDecoder().decode(new Uint8Array(bytes));
+        const idx=txt.indexOf('|');
+        if(idx<0){document.getElementById('stegResult').textContent='No data found';return;}
+        const foundPin=txt.slice(0,idx);
+        const end=txt.indexOf('|END');
+        const msg=txt.slice(idx+1,end);
+        if(foundPin===pin)document.getElementById('stegResult').textContent='🔓 '+msg;
+        else document.getElementById('stegResult').textContent='❌ Wrong PIN';
+      };
+      im.src=ev.target.result;
+    };
+    r.readAsDataURL(f);
+  };
+})();
+
+// ===== 16. Bioacoustic =====
+(function(){
+  let ac,an,src,st,raf,lastPeak=0,peakTime=0;
+  const c=document.getElementById('bioCanvas'),x=c.getContext('2d');
+  startFns.bioacoustic=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({audio:true});}catch(e){alert('Mic needed');return;}
+    ac=new(window.AudioContext||window.webkitAudioContext)();src=ac.createMediaStreamSource(st);
+    an=ac.createAnalyser();an.fftSize=4096;src.connect(an);
+    document.getElementById('bioStart').classList.add('hidden');
+    document.getElementById('bioStop').classList.remove('hidden');
+    loop();
+  };
+  stopFns.bioacoustic=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());if(ac)ac.close();document.getElementById('bioStart').classList.remove('hidden');document.getElementById('bioStop').classList.add('hidden');};
+  document.getElementById('bioStart').onclick=startFns.bioacoustic;
+  document.getElementById('bioStop').onclick=stopFns.bioacoustic;
+  function loop(){
+    const buf=new Uint8Array(an.frequencyBinCount);an.getByteFrequencyData(buf);
+    const sr=ac.sampleRate,bh=sr/an.fftSize;
+    let mx=0,mi=0;for(let i=2;i<buf.length;i++)if(buf[i]>mx){mx=buf[i];mi=i;}
+    const hz=Math.round(mi*bh);
+    if(mx>150){
+      lastPeak=hz;peakTime=performance.now();
+      document.getElementById('bioPeak').textContent=hz+' Hz';
+      let m='Unknown';
+      if(hz<500)m='Low call (frog/owl)';
+      else if(hz<2000)m='Bird chirp range';
+      else if(hz<5000)m='Insect / small bird';
+      else if(hz<12000)m='Bat / cricket';
+      else m='Ultrasonic';
+      document.getElementById('bioMatch').textContent=m;
+    }
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    const N=200,step=Math.floor(buf.length/N);
+    for(let i=0;i<N;i++){
+      const v=buf[i*step]/255;
+      x.fillStyle=`hsl(${220-v*180},90%,${20+v*50}%)`;
+      x.fillRect(i*(w/N),h-v*h,(w/N),v*h);
+    }
+    x.strokeStyle='#4ade80';x.lineWidth=2;
+    if(performance.now()-peakTime<300){
+      const px=(mi/an.frequencyBinCount)*w;
+      x.beginPath();x.moveTo(px,0);x.lineTo(px,h);x.stroke();
+    }
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 17. Material ID =====
+(function(){
+  let ac,an,src,st,raf,decayStart=0,lastV=0,decay=0,peakHz=0;
+  const c=document.getElementById('matCanvas'),x=c.getContext('2d');
+  startFns.materialId=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});}catch(e){alert('Mic needed');return;}
+    ac=new(window.AudioContext||window.webkitAudioContext)();src=ac.createMediaStreamSource(st);
+    an=ac.createAnalyser();an.fftSize=4096;src.connect(an);
+    document.getElementById('matStart').classList.add('hidden');
+    document.getElementById('matStop').classList.remove('hidden');
+    loop();
+  };
+  stopFns.materialId=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());if(ac)ac.close();document.getElementById('matStart').classList.remove('hidden');document.getElementById('matStop').classList.add('hidden');};
+  document.getElementById('matStart').onclick=startFns.materialId;
+  document.getElementById('matStop').onclick=stopFns.materialId;
+  function loop(){
+    const buf=new Uint8Array(an.frequencyBinCount);an.getByteFrequencyData(buf);
+    const sr=ac.sampleRate,bh=sr/an.fftSize;
+    let mx=0,mi=0;for(let i=2;i<buf.length;i++)if(buf[i]>mx){mx=buf[i];mi=i;}
+    let avg=0;for(let i=0;i<buf.length;i++)avg+=buf[i];avg/=buf.length;
+    if(avg>30){
+      if(lastV<30){decayStart=performance.now();peakHz=Math.round(mi*bh);}
+    } else if(lastV>=30 && decayStart>0){
+      decay=(performance.now()-decayStart)/1000;
+      document.getElementById('matDecay').textContent=decay.toFixed(3)+' s';
+      document.getElementById('matPeak').textContent=peakHz+' Hz';
+      let m='Unknown';
+      if(decay<0.05)m='Metal';
+      else if(decay<0.15)m='Glass / ceramic';
+      else if(decay<0.3)m='Wood / hard plastic';
+      else m='Rubber / soft';
+      document.getElementById('matMatch').textContent=m;
+      decayStart=0;
+    }
+    lastV=avg;
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    const N=256,step=Math.floor(buf.length/N);
+    for(let i=0;i<N;i++){
+      const v=buf[i*step]/255;
+      x.fillStyle=`hsl(${140-v*140},90%,55%)`;
+      x.fillRect(i*(w/N),h-v*h,(w/N)-1,v*h);
+    }
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 18. TapShape =====
+(function(){
+  let raf,lastTap=0,taps=0,tapTimer=null;
+  function onM(e){
+    const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;
+    const mag=Math.hypot(a.x||0,a.y||0,a.z||0);
+    const now=performance.now();
+    if(mag>18 && now-lastTap>150){
+      lastTap=now;taps++;
+      document.getElementById('tapCount').textContent=taps;
+      document.getElementById('tapLast').textContent=new Date().toLocaleTimeString();
+      if(tapTimer)clearTimeout(tapTimer);
+      tapTimer=setTimeout(()=>{
+        let act='Single tap';
+        if(taps>=3)act='Triple tap → 🎵 next';
+        else if(taps>=2)act='Double tap → ⏯ play/pause';
+        else act='Single tap → 📸 snapshot';
+        document.getElementById('tapAction').textContent=act;
+        if(navigator.vibrate)navigator.vibrate(20);
+        taps=0;
+      },400);
+    }
+  }
+  startFns.tapShape=async()=>{
+    if(typeof DeviceMotionEvent!=='undefined'&&DeviceMotionEvent.requestPermission)try{await DeviceMotionEvent.requestPermission();}catch(e){}
+    window.addEventListener('devicemotion',onM);
+    document.getElementById('tapStart').classList.add('hidden');
+    document.getElementById('tapStop').classList.remove('hidden');
+  };
+  stopFns.tapShape=()=>{window.removeEventListener('devicemotion',onM);document.getElementById('tapStart').classList.remove('hidden');document.getElementById('tapStop').classList.add('hidden');};
+  document.getElementById('tapStart').onclick=startFns.tapShape;
+  document.getElementById('tapStop').onclick=stopFns.tapShape;
+})();
+
+// ===== 19. SkyScanner =====
+(function(){
+  let wid=null,last=null;
+  startFns.skyScanner=()=>{
+    if(!navigator.geolocation){alert('GPS needed');return;}
+    document.getElementById('skyStart').classList.add('hidden');
+    document.getElementById('skyStop').classList.remove('hidden');
+    wid=navigator.geolocation.watchPosition(p=>{
+      document.getElementById('skyLat').textContent=p.coords.latitude.toFixed(4);
+      document.getElementById('skyLon').textContent=p.coords.longitude.toFixed(4);
+      if(p.coords.heading!=null){
+        const dirs=['N','NE','E','SE','S','SW','W','NW'];
+        const d=dirs[Math.round(p.coords.heading/45)%8];
+        document.getElementById('skyDir').textContent=d+' ('+Math.round(p.coords.heading)+'°)';
+      } else document.getElementById('skyDir').textContent='Walk to get heading';
+      document.getElementById('skySpd').textContent=((p.coords.speed||0)*3.6).toFixed(1)+' km/h';
+      last=p;
+    },e=>alert('GPS error'),{enableHighAccuracy:true});
+  };
+  stopFns.skyScanner=()=>{if(wid!==null)navigator.geolocation.clearWatch(wid);wid=null;document.getElementById('skyStart').classList.remove('hidden');document.getElementById('skyStop').classList.add('hidden');};
+  document.getElementById('skyStart').onclick=startFns.skyScanner;
+  document.getElementById('skyStop').onclick=stopFns.skyScanner;
+})();
+
+// ===== 20. SleepEye =====
+(function(){
+  let raf,series=[],events=0,t0=0,lastEventT=0;
+  const c=document.getElementById('sleepCanvas'),x=c.getContext('2d');
+  function onM(e){
+    const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;
+    const mag=Math.hypot(a.x||0,a.y||0,a.z||0);
+    document.getElementById('sleepMotion').textContent=mag.toFixed(2);
+    series.push({t:performance.now()-t0,v:mag});if(series.length>1500)series.shift();
+    const now=performance.now();
+    if(mag>15&&now-lastEventT>3000){events++;lastEventT=now;document.getElementById('sleepEvents').textContent=events;}
+  }
+  startFns.sleepEye=async()=>{
+    if(typeof DeviceMotionEvent!=='undefined'&&DeviceMotionEvent.requestPermission)try{await DeviceMotionEvent.requestPermission();}catch(e){}
+    window.addEventListener('devicemotion',onM);
+    series=[];events=0;t0=performance.now();
+    document.getElementById('sleepStart').classList.add('hidden');
+    document.getElementById('sleepStop').classList.remove('hidden');
+    draw();
+  };
+  stopFns.sleepEye=()=>{window.removeEventListener('devicemotion',onM);cancelAnimationFrame(raf);document.getElementById('sleepStart').classList.remove('hidden');document.getElementById('sleepStop').classList.add('hidden');};
+  document.getElementById('sleepStart').onclick=startFns.sleepEye;
+  document.getElementById('sleepStop').onclick=stopFns.sleepEye;
+  function draw(){
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    if(series.length>2){
+      let mn=Infinity,mx=-Infinity;for(const s of series){if(s.v<mn)mn=s.v;if(s.v>mx)mx=s.v;}
+      const rg=mx-mn||1;
+      x.strokeStyle='#4ade80';x.lineWidth=1.5;x.beginPath();
+      const dur=60000,now=performance.now()-t0;
+      series.forEach((s,i)=>{const xx=(1-(now-s.t)/dur)*w;const yy=h-((s.v-mn)/rg)*h*0.9-h*0.05;if(i===0)x.moveTo(xx,yy);else x.lineTo(xx,yy);});
+      x.stroke();
+    }
+    raf=requestAnimationFrame(draw);
+  }
+})();
+
+// ===== 21. SoundDrop =====
+(function(){
+  let ac,mic,an,src,listening=false,raf,decodeBuf=[];
+  const F1=1000,F2=1800,BIT=80;
+  async function initAc(){
+    if(ac)return true;
+    ac=new(window.AudioContext||window.webkitAudioContext)();
+    try{mic=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});}
+    catch(e){alert('Mic needed');return false;}
+    src=ac.createMediaStreamSource(mic);an=ac.createAnalyser();an.fftSize=2048;src.connect(an);
+    return true;
+  }
+  document.getElementById('sdSend').onclick=async()=>{
+    const msg=document.getElementById('sdMsg').value.trim();
+    if(!msg){alert('Type something');return;}
+    if(!await initAc())return;
+    document.getElementById('sdStatus').textContent='Sending...';
+    const bits=[];
+    for(let i=0;i<msg.length;i++){
+      const c=msg.charCodeAt(i);
+      for(let b=7;b>=0;b--){bits.push((c>>b)&1);}
+    }
+    bits.push(0);bits.push(0);bits.push(0);bits.push(0);
+    const total=bits.length*BIT/1000;
+    for(let i=0;i<bits.length;i++){
+      const t=ac.currentTime+i*(BIT/1000);
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.frequency.value=bits[i]?F2:F1;
+      g.gain.setValueAtTime(0.15,t);g.gain.linearRampToValueAtTime(0,t+BIT/1000);
+      o.connect(g).connect(ac.destination);o.start(t);o.stop(t+BIT/1000);
+    }
+    setTimeout(()=>{document.getElementById('sdStatus').textContent='Sent ('+total.toFixed(1)+'s)';},total*1000+200);
+  };
+  document.getElementById('sdRecv').onclick=async()=>{
+    if(!await initAc())return;
+    listening=true;decodeBuf=[];
+    document.getElementById('sdRecv').classList.add('hidden');
+    document.getElementById('sdRecvStop').classList.remove('hidden');
+    document.getElementById('sdStatus').textContent='Listening...';
+    loop();
+  };
+  document.getElementById('sdRecvStop').onclick=()=>{listening=false;cancelAnimationFrame(raf);document.getElementById('sdRecv').classList.remove('hidden');document.getElementById('sdRecvStop').classList.add('hidden');};
+  function loop(){
+    if(!listening)return;
+    const buf=new Uint8Array(an.frequencyBinCount);an.getByteFrequencyData(buf);
+    const sr=ac.sampleRate,bh=sr/an.fftSize;
+    const b1=Math.round(F1/bh),b2=Math.round(F2/bh);
+    let e1=0,e2=0;
+    for(let i=-2;i<=2;i++){e1+=buf[b1+i]||0;e2+=buf[b2+i]||0;}
+    const bit=e2>e1+30?1:(e1>e2+30?0:-1);
+    if(bit>=0)decodeBuf.push(bit);
+    if(decodeBuf.length>=80){
+      const bytes=[];
+      for(let i=0;i+7<decodeBuf.length;i+=8){
+        let c=0;for(let b=0;b<8;b++)c=(c<<1)|decodeBuf[i+b];
+        bytes.push(c);
+      }
+      // trim trailing
+      while(bytes.length&&bytes[bytes.length-1]===0)bytes.pop();
+      let txt='';
+      for(const b of bytes){if(b>=32&&b<127)txt+=String.fromCharCode(b);}
+      if(txt){document.getElementById('sdGot').textContent=txt;document.getElementById('sdStatus').textContent='Received ✓';}
+      decodeBuf=[];
+    }
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 22. CipherAir =====
+(function(){
+  let ac,mic,an,src,listening=false,raf,decodeBuf=[];
+  const F1=18500,F2=19500,BIT=60;
+  async function initAc(){
+    if(ac)return true;
+    ac=new(window.AudioContext||window.webkitAudioContext)();
+    try{mic=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});}
+    catch(e){alert('Mic needed');return false;}
+    src=ac.createMediaStreamSource(mic);an=ac.createAnalyser();an.fftSize=8192;src.connect(an);
+    return true;
+  }
+  document.getElementById('caSend').onclick=async()=>{
+    const msg=document.getElementById('caMsg').value.trim();
+    if(!msg){alert('Type message');return;}
+    if(!await initAc())return;
+    document.getElementById('caStatus').textContent='Sending (silent)...';
+    const bits=[];
+    for(let i=0;i<msg.length;i++){const c=msg.charCodeAt(i);for(let b=7;b>=0;b--)bits.push((c>>b)&1);}
+    for(let i=0;i<8;i++)bits.push(0);
+    for(let i=0;i<bits.length;i++){
+      const t=ac.currentTime+i*(BIT/1000);
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.frequency.value=bits[i]?F2:F1;
+      g.gain.setValueAtTime(0.3,t);g.gain.linearRampToValueAtTime(0,t+BIT/1000);
+      o.connect(g).connect(ac.destination);o.start(t);o.stop(t+BIT/1000);
+    }
+    setTimeout(()=>{document.getElementById('caStatus').textContent='Sent';},bits.length*BIT+200);
+  };
+  document.getElementById('caRecv').onclick=async()=>{
+    if(!await initAc())return;
+    listening=true;decodeBuf=[];
+    document.getElementById('caRecv').classList.add('hidden');
+    document.getElementById('caRecvStop').classList.remove('hidden');
+    document.getElementById('caStatus').textContent='Listening...';
+    loop();
+  };
+  document.getElementById('caRecvStop').onclick=()=>{listening=false;cancelAnimationFrame(raf);document.getElementById('caRecv').classList.remove('hidden');document.getElementById('caRecvStop').classList.add('hidden');};
+  function loop(){
+    if(!listening)return;
+    const buf=new Uint8Array(an.frequencyBinCount);an.getByteFrequencyData(buf);
+    const sr=ac.sampleRate,bh=sr/an.fftSize;
+    const b1=Math.round(F1/bh),b2=Math.round(F2/bh);
+    let e1=0,e2=0;
+    for(let i=-2;i<=2;i++){e1+=buf[b1+i]||0;e2+=buf[b2+i]||0;}
+    const bit=e2>e1+10?1:(e1>e2+10?0:-1);
+    if(bit>=0)decodeBuf.push(bit);
+    if(decodeBuf.length>=80){
+      const bytes=[];
+      for(let i=0;i+7<decodeBuf.length;i+=8){let c=0;for(let b=0;b<8;b++)c=(c<<1)|decodeBuf[i+b];bytes.push(c);}
+      while(bytes.length&&bytes[bytes.length-1]===0)bytes.pop();
+      let txt='';for(const b of bytes)if(b>=32&&b<127)txt+=String.fromCharCode(b);
+      if(txt){document.getElementById('caGot').textContent=txt;document.getElementById('caStatus').textContent='Received ✓';}
+      decodeBuf=[];
+    }
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 23. Rolling Shutter =====
+(function(){
+  let st,raf,prev=null;
+  const v=document.getElementById('rsVideo'),c=document.getElementById('rsCanvas'),x=c.getContext('2d');
+  const c2=document.createElement('canvas');c2.width=c.width;c2.height=c.height;
+  const c2x=c2.getContext('2d',{willReadFrequently:true});
+  startFns.rollingShutter=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}}});}catch(e){alert('Camera needed');return;}
+    v.srcObject=st;await v.play();prev=null;
+    document.getElementById('rsStart').classList.add('hidden');
+    document.getElementById('rsStop').classList.remove('hidden');
+    loop();
+  };
+  stopFns.rollingShutter=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());document.getElementById('rsStart').classList.remove('hidden');document.getElementById('rsStop').classList.add('hidden');};
+  document.getElementById('rsStart').onclick=startFns.rollingShutter;
+  document.getElementById('rsStop').onclick=stopFns.rollingShutter;
+  function loop(){
+    c2x.drawImage(v,0,0,c2.width,c2.height);
+    const cur=c2x.getImageData(0,0,c2.width,c2.height).data;
+    if(prev){
+      const out=x.createImageData(c2.width,c2.height);
+      for(let i=0;i<cur.length;i+=4){
+        const d=Math.abs(cur[i]-prev[i]);
+        const v=Math.min(255,d*6);
+        out.data[i]=v;out.data[i+1]=v;out.data[i+2]=v;out.data[i+3]=255;
+      }
+      x.putImageData(out,0,0);
+    }
+    prev=new Uint8ClampedArray(cur);
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 24. PocketChem =====
+(function(){
+  let st,raf;
+  const v=document.getElementById('pcVideo');
+  const c2=document.createElement('canvas');c2.width=64;c2.height=64;
+  const c2x=c2.getContext('2d',{willReadFrequently:true});
+  startFns.pocketChem=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}}});}catch(e){alert('Camera needed');return;}
+    v.srcObject=st;await v.play();
+    document.getElementById('pcStart').classList.add('hidden');
+    document.getElementById('pcStop').classList.remove('hidden');
+    loop();
+  };
+  stopFns.pocketChem=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());document.getElementById('pcStart').classList.remove('hidden');document.getElementById('pcStop').classList.add('hidden');};
+  document.getElementById('pcStart').onclick=startFns.pocketChem;
+  document.getElementById('pcStop').onclick=stopFns.pocketChem;
+  function loop(){
+    c2x.drawImage(v,0,0,64,64);
+    const d=c2x.getImageData(0,0,64,64).data;
+    let r=0,g=0,b=0,n=0;for(let i=0;i<d.length;i+=4){r+=d[i];g+=d[i+1];b+=d[i+2];n++;}
+    r/=n;g/=n;b/=n;
+    document.getElementById('pcR').textContent=Math.round(r);
+    document.getElementById('pcG').textContent=Math.round(g);
+    document.getElementById('pcB').textContent=Math.round(b);
+    document.getElementById('pcSwatch').style.background=`rgb(${r|0},${g|0},${b|0})`;
+    // crude pH estimate from red/green ratio
+    const rg=r/(g+1),ph=Math.max(0,Math.min(14,7+Math.log2(rg+0.01)*2));
+    document.getElementById('pcPh').textContent=ph.toFixed(1);
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 25. PhoneScope =====
+(function(){
+  let ac,an,src,st,raf,bufTime;
+  const c=document.getElementById('psCanvas'),x=c.getContext('2d');
+  startFns.phoneScope=async()=>{
+    try{st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});}catch(e){alert('Mic needed');return;}
+    ac=new(window.AudioContext||window.webkitAudioContext)();src=ac.createMediaStreamSource(st);
+    an=ac.createAnalyser();an.fftSize=2048;src.connect(an);
+    bufTime=new Float32Array(an.fftSize);
+    document.getElementById('psStart').classList.add('hidden');
+    document.getElementById('psStop').classList.remove('hidden');
+    loop();
+  };
+  stopFns.phoneScope=()=>{cancelAnimationFrame(raf);if(st)st.getTracks().forEach(t=>t.stop());if(ac)ac.close();document.getElementById('psStart').classList.remove('hidden');document.getElementById('psStop').classList.add('hidden');};
+  document.getElementById('psStart').onclick=startFns.phoneScope;
+  document.getElementById('psStop').onclick=stopFns.phoneScope;
+  function loop(){
+    an.getFloatTimeDomainData(bufTime);
+    let sum=0,peak=0;
+    for(let i=0;i<bufTime.length;i++){sum+=bufTime[i]*bufTime[i];const a=Math.abs(bufTime[i]);if(a>peak)peak=a;}
+    const rms=Math.sqrt(sum/bufTime.length);
+    document.getElementById('psRms').textContent=rms.toFixed(3);
+    document.getElementById('psPeak').textContent=peak.toFixed(3);
+    const w=c.width,h=c.height;x.fillStyle='#000';x.fillRect(0,0,w,h);
+    x.strokeStyle='#1a1a1a';x.lineWidth=1;
+    for(let i=1;i<4;i++){x.beginPath();x.moveTo(0,i*h/4);x.lineTo(w,i*h/4);x.stroke();}
+    for(let i=1;i<8;i++){x.beginPath();x.moveTo(i*w/8,0);x.lineTo(i*w/8,h);x.stroke();}
+    x.strokeStyle='#4ade80';x.lineWidth=2;x.beginPath();
+    for(let i=0;i<bufTime.length;i++){
+      const xx=(i/bufTime.length)*w,yy=h/2-bufTime[i]*h*0.45;
+      if(i===0)x.moveTo(xx,yy);else x.lineTo(xx,yy);
+    }
+    x.stroke();
+    raf=requestAnimationFrame(loop);
+  }
+})();
+
+// ===== 26. CipherBook =====
+(function(){
+  async function getKey(pass,salt){
+    const enc=new TextEncoder();
+    const km=await crypto.subtle.importKey('raw',enc.encode(pass),'PBKDF2',false,['deriveKey']);
+    return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:100000,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+  }
+  function buf2b64(b){return btoa(String.fromCharCode(...new Uint8Array(b)));}
+  function b642buf(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
+  document.getElementById('cbEnc').onclick=async()=>{
+    const txt=document.getElementById('cbText').value,pass=document.getElementById('cbPass').value;
+    if(!txt||!pass){alert('Text + password');return;}
+    const salt=crypto.getRandomValues(new Uint8Array(16));
+    const iv=crypto.getRandomValues(new Uint8Array(12));
+    const key=await getKey(pass,salt);
+    const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(txt));
+    const out=buf2b64(salt)+':'+buf2b64(iv)+':'+buf2b64(ct);
+    document.getElementById('cbResult').value=out;
+  };
+  document.getElementById('cbDec').onclick=async()=>{
+    const txt=document.getElementById('cbText').value.trim(),pass=document.getElementById('cbPass').value;
+    if(!txt||!pass){alert('Cipher + password');return;}
+    try{
+      const [s,i,c]=txt.split(':');
+      const key=await getKey(pass,b642buf(s));
+      const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b642buf(i)},key,b642buf(c));
+      document.getElementById('cbResult').value=new TextDecoder().decode(pt);
+    }catch(e){document.getElementById('cbResult').value='❌ Decrypt failed (wrong password or corrupted)';}
+  };
+})();
+
+// ===== 27. Legacy Lock =====
+(function(){
+  async function getKey(pass,salt){
+    const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);
+    return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:100000,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+  }
+  function buf2b64(b){return btoa(String.fromCharCode(...new Uint8Array(b)));}
+  function b642buf(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
+  document.getElementById('llSave').onclick=async()=>{
+    const msg=document.getElementById('llMsg').value,pass=document.getElementById('llPass').value,date=document.getElementById('llDate').value;
+    if(!msg||!pass||!date){alert('All fields needed');return;}
+    const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+    const key=await getKey(pass,salt);
+    const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(msg));
+    localStorage.setItem('roach_legacy',JSON.stringify({date,salt:buf2b64(salt),iv:buf2b64(iv),ct:buf2b64(ct)}));
+    document.getElementById('llResult').textContent='✓ Letter locked. Unlocks on '+date;
+  };
+  document.getElementById('llLoad').onclick=async()=>{
+    const pass=document.getElementById('llPass').value;
+    const data=JSON.parse(localStorage.getItem('roach_legacy')||'null');
+    if(!data){document.getElementById('llResult').textContent='No letter stored';return;}
+    const today=new Date().toISOString().slice(0,10);
+    if(today<data.date){document.getElementById('llResult').textContent='🔒 Locked until '+data.date;return;}
+    try{
+      const key=await getKey(pass,b642buf(data.salt));
+      const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b642buf(data.iv)},key,b642buf(data.ct));
+      document.getElementById('llResult').textContent='📖 '+new TextDecoder().decode(pt);
+    }catch(e){document.getElementById('llResult').textContent='❌ Wrong password';}
+  };
+})();
+
+// ===== 28. OfflineMind =====
+(function(){
+  const log=document.getElementById('omLog');
+  const rules=[
+    {k:['sad','depress','down','কষ্ট','মন খারাপ','দুঃখ'],q:'How long have you felt this way? Have you eaten today?',a:'Try: 10 min walk outside, water, protein snack. Talk to someone you trust. If it persists 2+ weeks, see a doctor.'},
+    {k:['tired','exhaust','sleepy','ক্লান্ত','ঘুম'],q:'How many hours did you sleep last night? Any screen time after midnight?',a:'Try a 20-min nap before 3pm. Avoid caffeine after 2pm. Aim for consistent sleep/wake time.'},
+    {k:['anxious','nervous','panic','চিন্তা','উদ্বেগ'],q:'Is this about something specific or general? Any physical symptoms (racing heart, tight chest)?',a:'Try box breathing: 4s in, 4s hold, 4s out, 4s hold. Repeat 4x. Write down the worry — externalizing helps.'},
+    {k:['angry','furious','রাগ'],q:'What triggered it? Is it a pattern or one-off?',a:'Delay response 24h. Physical activity burns cortisol. Write the anger letter — but don\'t send it.'},
+    {k:['hungry','খিদে','খাবার'],q:'When did you last eat? Water intake today?',a:'Protein + complex carbs + water. Avoid sugar spikes. Eat slowly, 20 min minimum.'},
+    {k:['happy','good','great','ভালো','খুশি'],q:'What made today good? Can you repeat it tomorrow?',a:'Note what worked. Build on it. Share the joy with someone.'},
+    {k:['lonely','একা'],q:'When did you last talk to someone you care about?',a:'Reach out to one person today. Even a 2-min message counts. Consider a walk in a public space.'},
+    {k:['focus','concentrat','মনোযোগ'],q:'What\'s distracting you? Environment or internal?',a:'25-min Pomodoro. Phone in another room. One task only. Break for 5 min.'}
+  ];
+  const fallback={
+    q:'Tell me more. What is the main thing on your mind?',
+    a:'General advice: hydrate, move your body, sleep on it, and note what you learned. Clarity comes with action, not more thinking.'
+  };
+  document.getElementById('omAsk').onclick=()=>{
+    const input=document.getElementById('omIn').value.trim().toLowerCase();
+    if(!input){return;}
+    let matched=null;
+    for(const r of rules){
+      if(r.k.some(k=>input.includes(k))){matched=r;break;}
+    }
+    const r=matched||fallback;
+    const entry=`👤 ${document.getElementById('omIn').value}\n\n🤔 ${r.q}\n\n💡 ${r.a}\n\n────────────\n`;
+    log.textContent=entry+log.textContent;
+    document.getElementById('omIn').value='';
+  };
+  log.textContent='Roach Mind ready. Ask about mood, sleep, food, focus, or anything on your mind.';
+})();
+
+// Service worker
+if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{});}
 </script>
 </body>
-                                                                  </html>
+        </html>
