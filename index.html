@@ -26,6 +26,7 @@ html,body{height:100%;background:#0a0a0a;color:#e8e8e8;font-family:system-ui,-ap
 .big:active{transform:scale(.98)}
 .big.stop{background:#ef4444;color:#fff}
 canvas{width:100%;background:#000;border-radius:12px;margin:10px 0;display:block}
+video{width:1px;height:1px;opacity:0;position:absolute;pointer-events:none}
 .readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin-top:10px}
 .readout>div{background:#151515;border-radius:10px;padding:10px;text-align:center}
 .readout small{color:#666;font-size:10px;display:block;text-transform:uppercase;letter-spacing:.5px}
@@ -152,7 +153,7 @@ canvas{width:100%;background:#000;border-radius:12px;margin:10px 0;display:block
       </button>
 
       <button class="mod" data-mod="cipherAir">
-        <svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0M8 12a4 4 0 0 1 8 0M12 12v0"/><circle cx="12" cy="16" r="1.5"/><path d="M12 18v3"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0M8 12a4 4 0 0 1 8 0"/><circle cx="12" cy="16" r="1.5"/><path d="M12 18v3"/></svg>
         CipherAir
       </button>
 
@@ -195,7 +196,7 @@ canvas{width:100%;background:#000;border-radius:12px;margin:10px 0;display:block
       <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 4-3 5-3 7"/><path d="M9 8a3 3 0 0 1 3-3"/><path d="M9 8c0 2 1 2.5 1 3.5"/><path d="M3 8a9 9 0 0 1 3-6.7"/><path d="M18.5 5.5A9 9 0 0 1 21 8"/></svg>
       BatEar
     </h2>
-    <p class="hint">Wear headphones. Detects ultrasonic frequencies (up to 22 kHz) and visualizes them live. Peak frequency is shown on the right.</p>
+    <p class="hint">Wear headphones. Detects ultrasonic frequencies (up to 22 kHz) and visualizes them live. Peak frequency is shown below.</p>
     <button id="batEarStart" class="big">Start Listening</button>
     <button id="batEarStop" class="big stop hidden">Stop</button>
     <div class="meter">
@@ -206,6 +207,23 @@ canvas{width:100%;background:#000;border-radius:12px;margin:10px 0;display:block
       <div><small>Peak Freq</small><b id="batEarPeak">— Hz</b></div>
       <div><small>Level</small><b id="batEarDb">— dB</b></div>
     </div>
+  </section>
+
+  <!-- PulseLens Module -->
+  <section id="mod-pulseLens" class="module hidden">
+    <h2>
+      <svg viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/></svg>
+      PulseLens
+    </h2>
+    <p class="hint">Turn on the flash. Gently place your fingertip over the rear camera lens. Hold still for 10 seconds.</p>
+    <button id="pulseStart" class="big">Start</button>
+    <button id="pulseStop" class="big stop hidden">Stop</button>
+    <video id="pulseVideo" playsinline muted></video>
+    <div class="readout">
+      <div><small>BPM</small><b id="pulseBpm">—</b></div>
+      <div><small>Signal</small><b id="pulseSig">—</b></div>
+    </div>
+    <canvas id="pulseCanvas" width="800" height="250"></canvas>
   </section>
 
   <!-- Placeholder for future modules -->
@@ -332,10 +350,124 @@ const stopFns = {};
   }
 })();
 
+// ===== PulseLens =====
+(function(){
+  let stream, raf, samples=[], t0=0;
+  const video = document.getElementById('pulseVideo');
+  const canvas = document.getElementById('pulseCanvas');
+  const ctx = canvas.getContext('2d');
+  const bpmEl = document.getElementById('pulseBpm');
+  const sigEl = document.getElementById('pulseSig');
+  const c2 = document.createElement('canvas');
+  c2.width = 64; c2.height = 64;
+  const c2x = c2.getContext('2d', { willReadFrequently:true });
+
+  startFns.pulseLens = async () => {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: 'environment' }, width: 320, height: 240 }
+      });
+    } catch(e){ alert('Camera permission required'); return; }
+    video.srcObject = stream;
+    await video.play();
+
+    const track = stream.getVideoTracks()[0];
+    const caps = track.getCapabilities ? track.getCapabilities() : {};
+    if(caps.torch){
+      try{ await track.applyConstraints({advanced:[{torch:true}]}); }catch(e){}
+    }
+
+    samples = []; t0 = performance.now();
+    document.getElementById('pulseStart').classList.add('hidden');
+    document.getElementById('pulseStop').classList.remove('hidden');
+    loop();
+  };
+
+  stopFns.pulseLens = () => {
+    cancelAnimationFrame(raf);
+    if(stream){
+      const track = stream.getVideoTracks()[0];
+      if(track && track.getCapabilities && track.getCapabilities().torch){
+        track.applyConstraints({advanced:[{torch:false}]}).catch(()=>{});
+      }
+      stream.getTracks().forEach(t => t.stop());
+    }
+    document.getElementById('pulseStart').classList.remove('hidden');
+    document.getElementById('pulseStop').classList.add('hidden');
+  };
+
+  document.getElementById('pulseStart').onclick = startFns.pulseLens;
+  document.getElementById('pulseStop').onclick = stopFns.pulseLens;
+
+  function loop(){
+    c2x.drawImage(video, 0, 0, 64, 64);
+    const d = c2x.getImageData(0, 0, 64, 64).data;
+    let r=0,n=0;
+    for(let i=0;i<d.length;i+=4){ r+=d[i]; n++; }
+    r/=n;
+
+    samples.push({t: performance.now()-t0, v: r});
+    if(samples.length > 900) samples.shift();
+
+    const t = performance.now()-t0;
+    sigEl.textContent = r.toFixed(1);
+
+    const w = canvas.width, h = canvas.height;
+    ctx.fillStyle = '#000'; ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 1;
+    for(let i=1;i<8;i++){ ctx.beginPath(); ctx.moveTo(i*w/8,0); ctx.lineTo(i*w/8,h); ctx.stroke(); }
+    for(let i=1;i<4;i++){ ctx.beginPath(); ctx.moveTo(0,i*h/4); ctx.lineTo(w,i*h/4); ctx.stroke(); }
+
+    if(samples.length > 2){
+      const win = 8000;
+      const visible = samples.filter(s => t - s.t < win);
+      if(visible.length > 2){
+        let mn=Infinity, mx=-Infinity;
+        for(const s of visible){ if(s.v<mn)mn=s.v; if(s.v>mx)mx=s.v; }
+        const range = mx-mn || 1;
+
+        ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        visible.forEach((s,i) => {
+          const x = (1 - (t-s.t)/win) * w;
+          const y = h - ((s.v-mn)/range) * h * 0.75 - h*0.12;
+          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+
+        const bpm = detectBpm(visible);
+        if(bpm) bpmEl.textContent = bpm;
+      }
+    }
+    raf = requestAnimationFrame(loop);
+  }
+
+  function detectBpm(s){
+    if(s.length < 150) return null;
+    const vals = s.map(x => x.v);
+    const mean = vals.reduce((a,b)=>a+b,0)/vals.length;
+    const sm = vals.map((_,i) => {
+      const a = Math.max(0, i-3), b = Math.min(vals.length, i+4);
+      let sum=0; for(let k=a;k<b;k++) sum+=vals[k];
+      return sum/(b-a);
+    });
+    let peaks = 0, lastPeak = -1e9;
+    for(let i=2;i<sm.length-2;i++){
+      if(sm[i]>sm[i-2] && sm[i]>sm[i+2] && sm[i] > mean){
+        if(s[i].t - lastPeak > 400){ peaks++; lastPeak = s[i].t; }
+      }
+    }
+    const dur = (s[s.length-1].t - s[0].t)/1000;
+    if(dur < 6) return null;
+    const bpm = Math.round((peaks/dur)*60);
+    return (bpm > 40 && bpm < 180) ? bpm : null;
+  }
+})();
+
 // PWA service worker
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('service-worker.js').catch(()=>{});
 }
 </script>
 </body>
-  </html>
+                                                                  </html>
