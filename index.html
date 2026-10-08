@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<title>Roach — Offline Toolkit</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#0a0a0a;color:#e8e8e8;font-family:system-ui,-apple-system,sans-serif;overflow-x:hidden}
+#app{min-height:100vh;padding:0 0 env(safe-area-inset-bottom)}
+#topbar{display:flex;align-items:center;gap:12px;padding:16px;background:#111;border-bottom:1px solid #1e1e1e;position:sticky;top:0;z-index:10}
+#topbar h1{font-size:20px;font-weight:700;letter-spacing:.5px}
+#backBtn{background:none;border:none;color:#4ade80;font-size:24px;padding:4px 8px;cursor:pointer}
+.hidden{display:none!important}
+.tagline{text-align:center;color:#666;font-size:13px;padding:16px 16px 4px;font-style:italic}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
+.mod{background:#151515;border:1px solid #222;border-radius:14px;padding:14px 10px;color:#e8e8e8;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:all .15s;font-family:inherit;font-size:13px;text-align:center;line-height:1.2}
+.mod:active{background:#1e1e1e;transform:scale(.96)}
+.mod .ico{font-size:26px;margin-bottom:2px}
+.mod small{color:#666;font-size:10px}
+.module{padding:16px}
+.module h2{font-size:18px;margin-bottom:8px;color:#4ade80}
+.hint{color:#888;font-size:13px;margin-bottom:16px;line-height:1.5}
+.big{width:100%;padding:14px;border-radius:12px;border:none;background:#4ade80;color:#000;font-size:15px;font-weight:700;margin-bottom:10px;cursor:pointer;font-family:inherit}
+.big:active{transform:scale(.98)}
+.big.stop{background:#ef4444;color:#fff}
+canvas{width:100%;background:#000;border-radius:12px;margin:10px 0;display:block}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin-top:10px}
+.readout>div{background:#151515;border-radius:10px;padding:10px;text-align:center}
+.readout small{color:#666;font-size:10px;display:block;text-transform:uppercase;letter-spacing:.5px}
+.readout b{color:#4ade80;font-size:16px;display:block;margin-top:2px;font-variant-numeric:tabular-nums}
+.meter{background:#151515;border-radius:10px;padding:10px;margin:10px 0}
+.bar{height:10px;background:#222;border-radius:5px;overflow:hidden}
+.bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,#4ade80,#facc15,#ef4444);transition:width .08s}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <button id="backBtn" class="hidden">←</button>
+    <h1 id="title">🪳 Roach</h1>
+  </header>
+
+  <main id="hub">
+    <p class="tagline">২৮টি যন্ত্র। ইন্টারনেট ছাড়াই।</p>
+    <div class="grid">
+      <button class="mod" data-mod="batEar"><span class="ico">👂</span>BatEar<small>ultrasonic</small></button>
+      <button class="mod" data-mod="pulseLens"><span class="ico">❤️</span>PulseLens<small>হার্টবিট</small></button>
+      <button class="mod" data-mod="geoPhone"><span class="ico">🌍</span>GeoPhone<small>সিসমোগ্রাফ</small></button>
+      <button class="mod" data-mod="soundShape"><span class="ico">🎨</span>SoundShape<small>শব্দের আকার</small></button>
+      <button class="mod" data-mod="chronoLens"><span class="ico">⏱️</span>ChronoLens<small>টাইম-ল্যাপস</small></button>
+      <button class="mod" data-mod="cosmicRay"><span class="ico">☢️</span>Cosmic Ray<small>কণা</small></button>
+      <button class="mod" data-mod="spectroLens"><span class="ico">🌈</span>SpectroLens<small>বর্ণালী</small></button>
+      <button class="mod" data-mod="gravityWell"><span class="ico">🎈</span>GravityWell<small>mid-air</small></button>
+      <button class="mod" data-mod="senseFusion"><span class="ico">🎛️</span>SenseFusion<small>সব সেন্সর</small></button>
+      <button class="mod" data-mod="pathReplay"><span class="ico">🛰️</span>PathReplay<small>পথ</small></button>
+      <button class="mod" data-mod="deadDrop"><span class="ico">📍</span>DeadDrop<small>GPS নোট</small></button>
+      <button class="mod" data-mod="lightGuard"><span class="ico">💡</span>LightGuard<small>আলো</small></button>
+      <button class="mod" data-mod="microScope"><span class="ico">🔬</span>MicroScope<small>magnify</small></button>
+      <button class="mod" data-mod="echoSonar"><span class="ico">🎯</span>EchoSonar<small>দূরত্ব</small></button>
+      <button class="mod" data-mod="stegano"><span class="ico">🔐</span>SteganoCam<small>গোপন বার্তা</small></button>
+      <button class="mod" data-mod="bioacoustic"><span class="ico">🐦</span>Bioacoustic<small>প্রাণী</small></button>
+      <button class="mod" data-mod="materialId"><span class="ico">🥁</span>Material ID<small>পদার্থ</small></button>
+      <button class="mod" data-mod="tapShape"><span class="ico">👆</span>TapShape<small>tap</small></button>
+      <button class="mod" data-mod="skyScanner"><span class="ico">🌌</span>SkyScanner<small>আকাশ</small></button>
+      <button class="mod" data-mod="sleepEye"><span class="ico">😴</span>SleepEye<small>ঘুম</small></button>
+      <button class="mod" data-mod="soundDrop"><span class="ico">🔊</span>SoundDrop<small>শব্দে ডেটা</small></button>
+      <button class="mod" data-mod="cipherAir"><span class="ico">📡</span>CipherAir<small>গোপন</small></button>
+      <button class="mod" data-mod="rollingShutter"><span class="ico">🎥</span>Rolling Shutter<small>কম্পন</small></button>
+      <button class="mod" data-mod="pocketChem"><span class="ico">🧪</span>PocketChem<small>রসায়ন</small></button>
+      <button class="mod" data-mod="phoneScope"><span class="ico">⚡</span>PhoneScope<small>oscilloscope</small></button>
+      <button class="mod" data-mod="cipherBook"><span class="ico">🕵️</span>CipherBook<small>ক্রিপ্টো</small></button>
+      <button class="mod" data-mod="legacyLock"><span class="ico">💌</span>Legacy Lock<small>চিঠি</small></button>
+      <button class="mod" data-mod="offlineMind"><span class="ico">🧠</span>OfflineMind<small>AI ছাড়া AI</small></button>
+    </div>
+  </main>
+
+  <!-- BatEar Module -->
+  <section id="mod-batEar" class="module hidden">
+    <h2>👂 BatEar — Ultrasonic Listener</h2>
+    <p class="hint">হেডফোন লাগাও। চারপাশের ultrasonic শব্দ শুনবে। ১৮kHz+ frequency slowed-down playback-এ।</p>
+    <button id="batEarStart" class="big">শুরু করো</button>
+    <button id="batEarStop" class="big stop hidden">থামাও</button>
+    <div class="meter">
+      <div class="bar"><span id="batEarLevel"></span></div>
+    </div>
+    <canvas id="batEarCanvas" width="800" height="300"></canvas>
+    <div class="readout">
+      <div><small>Peak Freq</small><b id="batEarPeak">— Hz</b></div>
+      <div><small>Level</small><b id="batEarDb">— dB</b></div>
+    </div>
+  </section>
+
+  <!-- Other modules placeholder -->
+  <section id="mod-placeholder" class="module hidden">
+    <h2 id="phTitle">Coming Soon</h2>
+    <p class="hint">এই মডিউলের কোড পরের ধাপে যোগ হবে।</p>
+  </section>
+</div>
+
+<script>
+const hub = document.getElementById('hub');
+const title = document.getElementById('title');
+const backBtn = document.getElementById('backBtn');
+const modules = document.querySelectorAll('.module');
+let activeModule = null;
+
+document.querySelectorAll('.mod').forEach(btn => {
+  btn.addEventListener('click', () => openModule(btn.dataset.mod));
+});
+
+backBtn.addEventListener('click', closeModule);
+
+function openModule(name){
+  hub.classList.add('hidden');
+  modules.forEach(m => m.classList.add('hidden'));
+  let el = document.getElementById('mod-' + name);
+  if(!el){
+    el = document.getElementById('mod-placeholder');
+    document.getElementById('phTitle').textContent = '🚧 ' + name;
+  }
+  el.classList.remove('hidden');
+  title.textContent = name;
+  backBtn.classList.remove('hidden');
+  activeModule = name;
+  if(startFns[name]) startFns[name]();
+}
+
+function closeModule(){
+  if(activeModule && stopFns[activeModule]) stopFns[activeModule]();
+  modules.forEach(m => m.classList.add('hidden'));
+  hub.classList.remove('hidden');
+  title.textContent = '🪳 Roach';
+  backBtn.classList.add('hidden');
+  activeModule = null;
+}
+
+const startFns = {};
+const stopFns = {};
+
+// ===== BatEar =====
+(function(){
+  let audioCtx, analyser, source, raf, stream;
+  const canvas = document.getElementById('batEarCanvas');
+  const ctx = canvas.getContext('2d');
+  const levelEl = document.getElementById('batEarLevel');
+  const peakEl = document.getElementById('batEarPeak');
+  const dbEl = document.getElementById('batEarDb');
+
+  startFns.batEar = async () => {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation:false, noiseSuppression:false, autoGainControl:false }
+      });
+    } catch(e){ alert('মাইক পারমিশন দরকার: ' + e.message); return; }
+    audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    source = audioCtx.createMediaStreamSource(stream);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 4096;
+    source.connect(analyser);
+    document.getElementById('batEarStart').classList.add('hidden');
+    document.getElementById('batEarStop').classList.remove('hidden');
+    draw();
+  };
+
+  stopFns.batEar = () => {
+    cancelAnimationFrame(raf);
+    if(stream) stream.getTracks().forEach(t => t.stop());
+    if(audioCtx) audioCtx.close();
+    document.getElementById('batEarStart').classList.remove('hidden');
+    document.getElementById('batEarStop').classList.add('hidden');
+  };
+
+  document.getElementById('batEarStart').onclick = startFns.batEar;
+  document.getElementById('batEarStop').onclick = stopFns.batEar;
+
+  function draw(){
+    const buf = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(buf);
+    const sr = audioCtx.sampleRate;
+    const binHz = sr / analyser.fftSize;
+
+    let maxV = 0, maxI = 0;
+    for(let i=2;i<buf.length;i++){ if(buf[i]>maxV){ maxV=buf[i]; maxI=i; } }
+    const peakHz = Math.round(maxI * binHz);
+    peakEl.textContent = peakHz + ' Hz';
+
+    let sum = 0;
+    for(let i=0;i<buf.length;i++) sum += buf[i];
+    const avg = sum / buf.length;
+    levelEl.style.width = Math.min(100, avg * 1.5) + '%';
+    const db = Math.round(20 * Math.log10(avg/255 + 1e-6));
+    dbEl.textContent = db + ' dB';
+
+    const w = canvas.width, h = canvas.height;
+    ctx.fillStyle = '#000'; ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 1;
+    for(let i=1;i<8;i++){ ctx.beginPath(); ctx.moveTo(i*w/8,0); ctx.lineTo(i*w/8,h); ctx.stroke(); }
+
+    const N = 128;
+    const step = Math.floor(buf.length / N);
+    for(let i=0;i<N;i++){
+      const v = buf[i*step] / 255;
+      const x = i * (w/N);
+      const bh = v * h;
+      const hue = 140 - v*140;
+      ctx.fillStyle = `hsl(${hue},90%,55%)`;
+      ctx.fillRect(x, h-bh, (w/N)-1, bh);
+    }
+    ctx.fillStyle = '#666'; ctx.font = '14px system-ui';
+    ctx.fillText('0 Hz', 8, 20);
+    ctx.fillText(Math.round(sr/2) + ' Hz', w-100, 20);
+
+    raf = requestAnimationFrame(draw);
+  }
+})();
+
+// PWA service worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+}
+</script>
+</body>
+  </html>
