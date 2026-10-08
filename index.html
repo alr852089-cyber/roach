@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -13,14 +13,14 @@ html,body{height:100%;background:#0a0a0a;color:#e8e8e8;font-family:system-ui,-ap
 #topbar h1{font-size:20px;font-weight:700;letter-spacing:.5px}
 #backBtn{background:none;border:none;color:#4ade80;font-size:24px;padding:4px 8px;cursor:pointer}
 .hidden{display:none!important}
-.tagline{text-align:center;color:#666;font-size:13px;padding:16px 16px 4px;font-style:italic}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
-.mod{background:#151515;border:1px solid #222;border-radius:14px;padding:14px 10px;color:#e8e8e8;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:all .15s;font-family:inherit;font-size:13px;text-align:center;line-height:1.2}
-.mod:active{background:#1e1e1e;transform:scale(.96)}
-.mod .ico{font-size:26px;margin-bottom:2px}
-.mod small{color:#666;font-size:10px}
+.tagline{text-align:center;color:#666;font-size:12px;padding:16px 16px 4px;font-style:italic;letter-spacing:.5px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px}
+.mod{background:#151515;border:1px solid #222;border-radius:14px;padding:14px 6px 10px;color:#e8e8e8;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all .15s;font-family:inherit;font-size:11px;text-align:center;line-height:1.2;font-weight:600;letter-spacing:.3px}
+.mod:active{background:#1e1e1e;transform:scale(.95)}
+.mod svg{width:26px;height:26px;stroke:#4ade80;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .module{padding:16px}
-.module h2{font-size:18px;margin-bottom:8px;color:#4ade80}
+.module h2{font-size:18px;margin-bottom:8px;color:#4ade80;display:flex;align-items:center;gap:8px}
+.module h2 svg{width:22px;height:22px;stroke:#4ade80;stroke-width:1.8;fill:none}
 .hint{color:#888;font-size:13px;margin-bottom:16px;line-height:1.5}
 .big{width:100%;padding:14px;border-radius:12px;border:none;background:#4ade80;color:#000;font-size:15px;font-weight:700;margin-bottom:10px;cursor:pointer;font-family:inherit}
 .big:active{transform:scale(.98)}
@@ -39,49 +39,165 @@ canvas{width:100%;background:#000;border-radius:12px;margin:10px 0;display:block
 <div id="app">
   <header id="topbar">
     <button id="backBtn" class="hidden">←</button>
-    <h1 id="title">🪳 Roach</h1>
+    <h1 id="title">Roach</h1>
   </header>
 
   <main id="hub">
-    <p class="tagline">২৮টি যন্ত্র। ইন্টারনেট ছাড়াই।</p>
+    <p class="tagline">28 tools · zero internet</p>
     <div class="grid">
-      <button class="mod" data-mod="batEar"><span class="ico">👂</span>BatEar<small>ultrasonic</small></button>
-      <button class="mod" data-mod="pulseLens"><span class="ico">❤️</span>PulseLens<small>হার্টবিট</small></button>
-      <button class="mod" data-mod="geoPhone"><span class="ico">🌍</span>GeoPhone<small>সিসমোগ্রাফ</small></button>
-      <button class="mod" data-mod="soundShape"><span class="ico">🎨</span>SoundShape<small>শব্দের আকার</small></button>
-      <button class="mod" data-mod="chronoLens"><span class="ico">⏱️</span>ChronoLens<small>টাইম-ল্যাপস</small></button>
-      <button class="mod" data-mod="cosmicRay"><span class="ico">☢️</span>Cosmic Ray<small>কণা</small></button>
-      <button class="mod" data-mod="spectroLens"><span class="ico">🌈</span>SpectroLens<small>বর্ণালী</small></button>
-      <button class="mod" data-mod="gravityWell"><span class="ico">🎈</span>GravityWell<small>mid-air</small></button>
-      <button class="mod" data-mod="senseFusion"><span class="ico">🎛️</span>SenseFusion<small>সব সেন্সর</small></button>
-      <button class="mod" data-mod="pathReplay"><span class="ico">🛰️</span>PathReplay<small>পথ</small></button>
-      <button class="mod" data-mod="deadDrop"><span class="ico">📍</span>DeadDrop<small>GPS নোট</small></button>
-      <button class="mod" data-mod="lightGuard"><span class="ico">💡</span>LightGuard<small>আলো</small></button>
-      <button class="mod" data-mod="microScope"><span class="ico">🔬</span>MicroScope<small>magnify</small></button>
-      <button class="mod" data-mod="echoSonar"><span class="ico">🎯</span>EchoSonar<small>দূরত্ব</small></button>
-      <button class="mod" data-mod="stegano"><span class="ico">🔐</span>SteganoCam<small>গোপন বার্তা</small></button>
-      <button class="mod" data-mod="bioacoustic"><span class="ico">🐦</span>Bioacoustic<small>প্রাণী</small></button>
-      <button class="mod" data-mod="materialId"><span class="ico">🥁</span>Material ID<small>পদার্থ</small></button>
-      <button class="mod" data-mod="tapShape"><span class="ico">👆</span>TapShape<small>tap</small></button>
-      <button class="mod" data-mod="skyScanner"><span class="ico">🌌</span>SkyScanner<small>আকাশ</small></button>
-      <button class="mod" data-mod="sleepEye"><span class="ico">😴</span>SleepEye<small>ঘুম</small></button>
-      <button class="mod" data-mod="soundDrop"><span class="ico">🔊</span>SoundDrop<small>শব্দে ডেটা</small></button>
-      <button class="mod" data-mod="cipherAir"><span class="ico">📡</span>CipherAir<small>গোপন</small></button>
-      <button class="mod" data-mod="rollingShutter"><span class="ico">🎥</span>Rolling Shutter<small>কম্পন</small></button>
-      <button class="mod" data-mod="pocketChem"><span class="ico">🧪</span>PocketChem<small>রসায়ন</small></button>
-      <button class="mod" data-mod="phoneScope"><span class="ico">⚡</span>PhoneScope<small>oscilloscope</small></button>
-      <button class="mod" data-mod="cipherBook"><span class="ico">🕵️</span>CipherBook<small>ক্রিপ্টো</small></button>
-      <button class="mod" data-mod="legacyLock"><span class="ico">💌</span>Legacy Lock<small>চিঠি</small></button>
-      <button class="mod" data-mod="offlineMind"><span class="ico">🧠</span>OfflineMind<small>AI ছাড়া AI</small></button>
+
+      <button class="mod" data-mod="batEar">
+        <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 4-3 5-3 7"/><path d="M9 8a3 3 0 0 1 3-3"/><path d="M9 8c0 2 1 2.5 1 3.5"/><path d="M3 8a9 9 0 0 1 3-6.7"/><path d="M18.5 5.5A9 9 0 0 1 21 8"/></svg>
+        BatEar
+      </button>
+
+      <button class="mod" data-mod="pulseLens">
+        <svg viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/></svg>
+        PulseLens
+      </button>
+
+      <button class="mod" data-mod="geoPhone">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+        GeoPhone
+      </button>
+
+      <button class="mod" data-mod="soundShape">
+        <svg viewBox="0 0 24 24"><path d="M2 12h2l2-6 3 12 3-16 3 20 3-14 2 4h2"/></svg>
+        SoundShape
+      </button>
+
+      <button class="mod" data-mod="chronoLens">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        ChronoLens
+      </button>
+
+      <button class="mod" data-mod="cosmicRay">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 10V2M10.3 13L3 17M13.7 13l7.3 4"/></svg>
+        Cosmic Ray
+      </button>
+
+      <button class="mod" data-mod="spectroLens">
+        <svg viewBox="0 0 24 24"><path d="M3 20h18M12 3v9M6 8l4 4M18 8l-4 4"/><circle cx="12" cy="14" r="2"/></svg>
+        SpectroLens
+      </button>
+
+      <button class="mod" data-mod="gravityWell">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 9V3M5 12a7 7 0 0 0 14 0 7 7 0 0 0-14 0z"/><path d="M3 21h18"/></svg>
+        GravityWell
+      </button>
+
+      <button class="mod" data-mod="senseFusion">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        SenseFusion
+      </button>
+
+      <button class="mod" data-mod="pathReplay">
+        <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6c6 0 4 12 8 12"/></svg>
+        PathReplay
+      </button>
+
+      <button class="mod" data-mod="deadDrop">
+        <svg viewBox="0 0 24 24"><path d="M12 22s7-7 7-13a7 7 0 0 0-14 0c0 6 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        DeadDrop
+      </button>
+
+      <button class="mod" data-mod="lightGuard">
+        <svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c1 1 1.5 2 1.5 3.5h5c0-1.5.5-2.5 1.5-3.5A6 6 0 0 0 12 3z"/></svg>
+        LightGuard
+      </button>
+
+      <button class="mod" data-mod="microScope">
+        <svg viewBox="0 0 24 24"><path d="M6 20h14M9 20v-3a5 5 0 0 1 5-5h1"/><path d="M14 3l3 3-4 4-3-3z"/><path d="M10 7l-3 3"/></svg>
+        MicroScope
+      </button>
+
+      <button class="mod" data-mod="echoSonar">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>
+        EchoSonar
+      </button>
+
+      <button class="mod" data-mod="stegano">
+        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="15" height="12" rx="2"/><path d="M18 9l3-2v10l-3-2"/><circle cx="8" cy="11" r="1.5"/></svg>
+        SteganoCam
+      </button>
+
+      <button class="mod" data-mod="bioacoustic">
+        <svg viewBox="0 0 24 24"><path d="M16 6c0 3-3 4-6 4s-4 1-4 3 1 3 3 3c1 0 2 .5 2 2v2"/><circle cx="17" cy="6" r="1"/><path d="M14 4l3-2"/></svg>
+        Bioacoustic
+      </button>
+
+      <button class="mod" data-mod="materialId">
+        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="9" rx="8" ry="3"/><path d="M4 9v6c0 1.7 3.6 3 8 3s8-1.3 8-3V9"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+        Material ID
+      </button>
+
+      <button class="mod" data-mod="tapShape">
+        <svg viewBox="0 0 24 24"><path d="M9 11V6a2 2 0 1 1 4 0v5"/><path d="M13 11V9a2 2 0 1 1 4 0v3"/><path d="M17 11v-1a2 2 0 1 1 4 0v5a6 6 0 0 1-6 6h-3a6 6 0 0 1-6-6v-3a2 2 0 1 1 4 0"/></svg>
+        TapShape
+      </button>
+
+      <button class="mod" data-mod="skyScanner">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M12 2v2M12 12v2M6 8H4M20 8h-2M7 3l1.5 1.5M17 3l-1.5 1.5"/><path d="M5 20l7-4 7 4"/></svg>
+        SkyScanner
+      </button>
+
+      <button class="mod" data-mod="sleepEye">
+        <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        SleepEye
+      </button>
+
+      <button class="mod" data-mod="soundDrop">
+        <svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+        SoundDrop
+      </button>
+
+      <button class="mod" data-mod="cipherAir">
+        <svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0M8 12a4 4 0 0 1 8 0M12 12v0"/><circle cx="12" cy="16" r="1.5"/><path d="M12 18v3"/></svg>
+        CipherAir
+      </button>
+
+      <button class="mod" data-mod="rollingShutter">
+        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="14" height="10" rx="2"/><path d="M17 10l4-2v8l-4-2"/><path d="M7 5l2 2M11 5l2 2M15 5l2 2"/></svg>
+        Rolling Shutter
+      </button>
+
+      <button class="mod" data-mod="pocketChem">
+        <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7 15h10"/></svg>
+        PocketChem
+      </button>
+
+      <button class="mod" data-mod="phoneScope">
+        <svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+        PhoneScope
+      </button>
+
+      <button class="mod" data-mod="cipherBook">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/><circle cx="16" cy="16" r="1"/></svg>
+        CipherBook
+      </button>
+
+      <button class="mod" data-mod="legacyLock">
+        <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.5"/></svg>
+        Legacy Lock
+      </button>
+
+      <button class="mod" data-mod="offlineMind">
+        <svg viewBox="0 0 24 24"><path d="M9 4a4 4 0 0 0-4 4 3 3 0 0 0-1 5.8A3 3 0 0 0 7 18a3 3 0 0 0 5 1V4a3 3 0 0 0-3 0z"/><path d="M15 4a4 4 0 0 1 4 4 3 3 0 0 1 1 5.8A3 3 0 0 1 17 18a3 3 0 0 1-5 1"/></svg>
+        OfflineMind
+      </button>
+
     </div>
   </main>
 
   <!-- BatEar Module -->
   <section id="mod-batEar" class="module hidden">
-    <h2>👂 BatEar — Ultrasonic Listener</h2>
-    <p class="hint">হেডফোন লাগাও। চারপাশের ultrasonic শব্দ শুনবে। ১৮kHz+ frequency slowed-down playback-এ।</p>
-    <button id="batEarStart" class="big">শুরু করো</button>
-    <button id="batEarStop" class="big stop hidden">থামাও</button>
+    <h2>
+      <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 4-3 5-3 7"/><path d="M9 8a3 3 0 0 1 3-3"/><path d="M9 8c0 2 1 2.5 1 3.5"/><path d="M3 8a9 9 0 0 1 3-6.7"/><path d="M18.5 5.5A9 9 0 0 1 21 8"/></svg>
+      BatEar
+    </h2>
+    <p class="hint">Wear headphones. Detects ultrasonic frequencies (up to 22 kHz) and visualizes them live. Peak frequency is shown on the right.</p>
+    <button id="batEarStart" class="big">Start Listening</button>
+    <button id="batEarStop" class="big stop hidden">Stop</button>
     <div class="meter">
       <div class="bar"><span id="batEarLevel"></span></div>
     </div>
@@ -92,10 +208,10 @@ canvas{width:100%;background:#000;border-radius:12px;margin:10px 0;display:block
     </div>
   </section>
 
-  <!-- Other modules placeholder -->
+  <!-- Placeholder for future modules -->
   <section id="mod-placeholder" class="module hidden">
     <h2 id="phTitle">Coming Soon</h2>
-    <p class="hint">এই মডিউলের কোড পরের ধাপে যোগ হবে।</p>
+    <p class="hint">This module's code will be added in the next step.</p>
   </section>
 </div>
 
@@ -118,7 +234,7 @@ function openModule(name){
   let el = document.getElementById('mod-' + name);
   if(!el){
     el = document.getElementById('mod-placeholder');
-    document.getElementById('phTitle').textContent = '🚧 ' + name;
+    document.getElementById('phTitle').textContent = name;
   }
   el.classList.remove('hidden');
   title.textContent = name;
@@ -131,7 +247,7 @@ function closeModule(){
   if(activeModule && stopFns[activeModule]) stopFns[activeModule]();
   modules.forEach(m => m.classList.add('hidden'));
   hub.classList.remove('hidden');
-  title.textContent = '🪳 Roach';
+  title.textContent = 'Roach';
   backBtn.classList.add('hidden');
   activeModule = null;
 }
@@ -153,7 +269,7 @@ const stopFns = {};
       stream = await navigator.mediaDevices.getUserMedia({
         audio: { echoCancellation:false, noiseSuppression:false, autoGainControl:false }
       });
-    } catch(e){ alert('মাইক পারমিশন দরকার: ' + e.message); return; }
+    } catch(e){ alert('Microphone permission required: ' + e.message); return; }
     audioCtx = new (window.AudioContext||window.webkitAudioContext)();
     source = audioCtx.createMediaStreamSource(stream);
     analyser = audioCtx.createAnalyser();
@@ -222,4 +338,4 @@ if('serviceWorker' in navigator){
 }
 </script>
 </body>
-  </html>
+        </html>
